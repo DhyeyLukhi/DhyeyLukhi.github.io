@@ -24,22 +24,44 @@
 
     /* Shelf */
     .shelf{
-      background: linear-gradient(180deg,#6b4a34,#553724);
-      height:120px;border-radius:8px;padding:18px;position:relative;box-shadow:0 8px 20px rgba(0,0,0,0.6), inset 0 -6px 12px rgba(0,0,0,0.25);
-      display:flex;align-items:center;gap:18px
-    }
+  width:100%;
+  height:240px;
+  background:#3a291b;
+  background-image:url('assets/wood-dark-walnut.jpg');
+  background-size:cover;
+  background-position:center;
+  border-radius:12px;
+  padding:0;
+  position:relative;
+  box-shadow:
+    inset 0 0 40px rgba(0,0,0,0.55),
+    inset 0 12px 18px rgba(0,0,0,0.45),
+    inset 0 -12px 18px rgba(0,0,0,0.45),
+    0 14px 40px rgba(0,0,0,0.7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.shelf:before{content:'';position:absolute;left:20px;right:20px;bottom:-14px;height:16px;background:rgba(0,0,0,0.4);filter:blur(10px);border-radius:8px;}
     .shelf:before{content:'';position:absolute;left:12px;right:12px;bottom:-12px;height:14px; background:rgba(0,0,0,0.35);filter:blur(8px);border-radius:6px}
 
     /* Photo frame */
-    .frame{
-      width:110px;height:110px;background:linear-gradient(180deg,#cfcfcf,#eaeaea);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 14px rgba(0,0,0,0.45), inset 0 2px 6px rgba(255,255,255,0.6);
-      transform-style:preserve-3d;transition:transform .18s ease;
-    }
-    .frame img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
-    .frame:after{content:'';position:absolute;left:6px;top:6px;right:6px;height:20%;border-radius:6px;background:linear-gradient(180deg,rgba(255,255,255,0.45),rgba(255,255,255,0.06));mix-blend-mode:overlay}
-    .frame:hover{transform:translateY(-6px)}
-
-    .identity{color:#fdeccf}
+.shelf-frame{
+  width:160px;
+  height:200px;
+  background:url('assets/frame-wood.png');
+  background-size:cover;
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 6px 14px rgba(0,0,0,0.6), inset 0 2px 6px rgba(255,255,255,0.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.shelf-frame img{
+  width:100%;height:100%;object-fit:cover;border-radius:8px;
+}
+.identity{color:#fdeccf}
     .identity h1{font-size:20px;letter-spacing:0.6px}
     .identity p{opacity:0.9;margin-top:6px;font-size:13px}
 

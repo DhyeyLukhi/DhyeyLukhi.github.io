@@ -2,338 +2,402 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dhyey Lukhi — Personal Bio</title>
-  <meta name="description" content="Dhyey Lukhi — skeuomorphic personal link page with chess.com Elo panel" />
-
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dhyey Lukhi — Skeuomorphic Bio</title>
   <style>
-  /* -----------------------------
-     Skeuomorphic Personal Bio
-     - Single-file for GitHub Pages
-     - Replace placeholder links / image later
-     ------------------------------*/
-  :root{
-    --page-width: 360px;
-    --bg-day-1: #e6e2d3; /* warm paper */
-    --bg-day-2: #f6f2e8;
-    --bg-night-1: #0f1216; /* deep charcoal */
-    --bg-night-2: #1a1f24;
-    --panel-bg-day: linear-gradient(180deg,#faf6f0,#efe7d9);
-    --panel-bg-night: linear-gradient(180deg,#16181a,#0d0f11);
-    --accent: #b8860b; /* warm gold tone */
-    --muted: #66625a;
-    --glass: rgba(255,255,255,0.06);
-    --shadow-dark: rgba(0,0,0,0.35);
-    --shadow-light: rgba(255,255,255,0.6);
-    --radius: 18px;
-    --icon-size: 58px;
-    --text-color-day: #2b2b2b;
-    --text-color-night: #e6e6e6;
-    --skeuo-border: rgba(0,0,0,0.12);
-  }
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#222}
 
-  html,body{height:100%;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+    /* Background: dark walnut wooden desk */
+    body{
+      background: linear-gradient(180deg,#3b2a1a 0%, #2f1f13 100%);
+      background-image:
+        linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.06) 100%);
+      min-height:100vh;
+      display:flex;align-items:center;justify-content:center;padding:24px;
+    }
 
-  /* Page background layers: linen + subtle Victorian pattern (CSS) + spotlight */
-  body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;transition:background 0.45s ease;color:var(--text-color-day);}
+    /* Central stage */
+    .stage{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:28px}
 
-  /* Day mode */
-  body[data-theme="day"]{
-    background: radial-gradient(1200px 600px at 50% 8%, rgba(255,255,240,0.5), transparent 8%), linear-gradient(180deg,var(--bg-day-1),var(--bg-day-2));
-    background-blend-mode: overlay;
-    color:var(--text-color-day);
-    -webkit-font-smoothing:antialiased;
-  }
-  /* Night mode */
-  body[data-theme="night"]{
-    background: radial-gradient(900px 420px at 50% 12%, rgba(255,255,255,0.02), transparent 8%), linear-gradient(180deg,var(--bg-night-1),var(--bg-night-2));
-    color:var(--text-color-night);
-  }
+    /* Shelf */
+    .shelf{
+      background: linear-gradient(180deg,#6b4a34,#553724);
+      height:120px;border-radius:8px;padding:18px;position:relative;box-shadow:0 8px 20px rgba(0,0,0,0.6), inset 0 -6px 12px rgba(0,0,0,0.25);
+      display:flex;align-items:center;gap:18px
+    }
+    .shelf:before{content:'';position:absolute;left:12px;right:12px;bottom:-12px;height:14px; background:rgba(0,0,0,0.35);filter:blur(8px);border-radius:6px}
 
-  /* subtle repeating pattern to hint Victorian wallpaper (very faint) */
-  .pattern{
-    position:fixed;inset:0;pointer-events:none;opacity:0.06;background-image:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 1px, transparent 1px 14px), radial-gradient(circle at 10px 10px, rgba(0,0,0,0.01), transparent 20px);
-  }
+    /* Photo frame */
+    .frame{
+      width:110px;height:110px;background:linear-gradient(180deg,#cfcfcf,#eaeaea);border-radius:8px;padding:8px;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 6px 14px rgba(0,0,0,0.45), inset 0 2px 6px rgba(255,255,255,0.6);
+      transform-style:preserve-3d;transition:transform .18s ease;
+    }
+    .frame img{width:100%;height:100%;object-fit:cover;border-radius:6px;display:block}
+    .frame:after{content:'';position:absolute;left:6px;top:6px;right:6px;height:20%;border-radius:6px;background:linear-gradient(180deg,rgba(255,255,255,0.45),rgba(255,255,255,0.06));mix-blend-mode:overlay}
+    .frame:hover{transform:translateY(-6px)}
 
-  /* Container */
-  .frame{width:var(--page-width);max-width:100%;}
+    .identity{color:#fdeccf}
+    .identity h1{font-size:20px;letter-spacing:0.6px}
+    .identity p{opacity:0.9;margin-top:6px;font-size:13px}
 
-  /* Header: Skeuo card top bar */
-  .card{
-    border-radius:22px;
-    padding:18px;
-    box-sizing:border-box;
-    background:var(--panel-bg-day);
-    box-shadow: 0 18px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
-    border:1px solid rgba(0,0,0,0.12);
-    position:relative;
-    overflow:hidden;
-    transition:background 0.45s, box-shadow 0.45s, color 0.45s;
-  }
-  body[data-theme="night"] .card{background:var(--panel-bg-night);box-shadow: 0 18px 28px rgba(0,0,0,0.6), inset 0 -1px 0 rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);}
+    /* Desk area with books and objects */
+    .desk{background:linear-gradient(180deg,#2b1a0f 0,#1f130a 100%);border-radius:14px;padding:28px;display:flex;flex-direction:row;gap:24px;align-items:flex-start;box-shadow:0 18px 50px rgba(0,0,0,0.7);position:relative}
 
-  /* Top header decorations that mimic stitched leather with stitching lines */
-  .card::before{
-    content:"";position:absolute;inset:auto 0 65% 0;height:46px;border-radius:14px;background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(255,255,255,0.08));box-shadow:inset 0 -4px 8px rgba(0,0,0,0.08);pointer-events:none;
-  }
+    /* Left column: books */
+    .books{display:flex;flex-direction:column;gap:18px;width:420px}
+    .book{width:420px;height:140px;position:relative;perspective:1400px;cursor:pointer}
+    .book .cover{
+      position:absolute;left:0;top:0;right:0;bottom:0;border-radius:8px;box-shadow:0 16px 40px rgba(0,0,0,0.6);display:flex;align-items:center;padding:18px;gap:16px;transform-origin:left center;transition:transform .45s cubic-bezier(.2,.9,.3,1),box-shadow .2s;
+      background-image:linear-gradient(180deg,rgba(0,0,0,0.06),rgba(0,0,0,0.12));
+      background-size:cover;background-position:center;overflow:hidden
+    }
+    /* Leather texture using subtle noise via gradients */
+    .book.leather .cover{background:linear-gradient(180deg,#4a2b1f,#3b2218);background-blend-mode:multiply}
+    .book.leather .logo{background:rgba(255,255,255,0.06);padding:10px;border-radius:6px;box-shadow:inset 0 -2px 8px rgba(0,0,0,0.6),0 6px 12px rgba(0,0,0,0.45)}
+    .book .title{color:#f4e9df;font-weight:600;font-size:16px}
+    .book:hover .cover{transform:translateX(10px) rotateY(-6deg)}
 
-  /* Profile row */
-  .profile-row{display:flex;gap:12px;align-items:center}
-  .avatar{
-    width:72px;height:72px;border-radius:16px;flex:0 0 72px;overflow:hidden;background:linear-gradient(180deg, #fff,#eee);box-shadow: 0 6px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.08);
-  }
-  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
-  .name-block{flex:1}
-  .name-block .name{font-weight:700;font-size:1.05rem;letter-spacing:0.2px}
-  .name-block .subtitle{font-size:0.78rem;color:var(--muted);margin-top:6px}
-  body[data-theme="night"] .name-block .subtitle{color:rgba(255,255,255,0.55)}
+    /* Book viewer modal */
+    .viewer{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:1200}
+    .viewer.open{display:flex}
+    .viewer .sheet{width:min(920px,95%);height:min(620px,86%);background:linear-gradient(180deg,#fbf7ef,#efe6d6);border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,0.7);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
 
-  /* Skeuomorphic shelf for icons */
-  .shelf{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;margin-bottom:8px}
-  .app{
-    width:calc((100% - 24px)/3); /* three across */
-    height:86px;border-radius:14px;padding:8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:inherit;
-    background:linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.06));border:1px solid rgba(0,0,0,0.12);box-shadow: 0 8px 16px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
-    transition:transform 0.18s cubic-bezier(.2,.9,.3,1),box-shadow 0.18s;
-  }
-  body[data-theme="night"] .app{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02);box-shadow: 0 10px 18px rgba(0,0,0,0.6), inset 0 -2px 6px rgba(255,255,255,0.02)}
-  .app:active{transform:translateY(2px)}
-  .app .app-icon{width:var(--icon-size);height:var(--icon-size);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow: 0 8px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);}
-  .app .label{font-size:0.7rem;margin-top:6px;opacity:0.95}
+    .pager{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:86%;height:86%;display:flex;align-items:center;justify-content:center;gap:6px}
+    .page{width:48%;height:92%;background:#fff;border-radius:4px;box-shadow:0 12px 30px rgba(0,0,0,0.28);overflow:hidden;position:relative;padding:20px;backface-visibility:hidden}
 
-  /* Chess panel - skeu metal plate */
-  .chess-panel{margin-top:14px;border-radius:12px;padding:12px;background:linear-gradient(180deg,#bfb5a2,#e7dcc3);box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 2px 0 rgba(255,255,255,0.6);border:1px solid rgba(0,0,0,0.14)}
-  body[data-theme="night"] .chess-panel{background:linear-gradient(180deg,#2a2d2f,#161718);box-shadow: 0 12px 28px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-  .chess-row{display:flex;gap:12px;align-items:center}
-  .elo{flex:1;text-align:center}
-  .elo .label{font-size:0.75rem;margin-bottom:6px;opacity:0.9}
-  .elo .rating{font-weight:700;font-size:1.12rem}
-  .chess-meta{font-size:0.75rem;color:var(--muted);margin-top:8px;text-align:center}
+    /* page flip effect */
+    .page.left{transform-origin:right center}
+    .page.right{transform-origin:left center}
+    .page.flip{animation:pageFlip .6s ease forwards}
+    @keyframes pageFlip{
+      0%{transform:rotateY(0)}
+      100%{transform:rotateY(-180deg)}
+    }
 
-  /* Footer small text */
-  .meta{font-size:0.72rem;color:var(--muted);text-align:center;margin-top:12px}
-  body[data-theme="night"] .meta{color:rgba(255,255,255,0.57)}
+    .page h3{font-size:16px;margin-bottom:8px}
+    .page p{font-size:14px;line-height:1.4;color:#222}
 
-  /* Toggle switch */
-  .controls{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
-  .theme-toggle{display:inline-flex;gap:8px;align-items:center}
-  .switch{width:56px;height:30px;border-radius:20px;background:linear-gradient(180deg,#f4f1ec,#d8d0bf);border:1px solid rgba(0,0,0,0.12);padding:4px;display:inline-flex;align-items:center;position:relative;cursor:pointer}
-  .switch .knob{width:22px;height:22px;border-radius:50%;background:white;box-shadow:0 6px 12px rgba(0,0,0,0.25);transform:translateX(0);transition:transform 0.28s cubic-bezier(.2,.9,.3,1);}
-  body[data-theme="night"] .switch{background:linear-gradient(180deg,#0b0d0f,#1d1f22);border:1px solid rgba(255,255,255,0.04)}
-  body[data-theme="night"] .switch .knob{transform:translateX(26px);background:#111}
+    /* Right column: contact objects */
+    .objects{width:320px;display:flex;flex-direction:column;gap:16px}
+    .obj{background:linear-gradient(180deg,#f7f3ea,#ebe0d0);border-radius:10px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 12px 32px rgba(0,0,0,0.4)}
+    .obj .icon{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 -6px 10px rgba(0,0,0,0.08)}
+    .obj .meta{display:flex;flex-direction:column}
+    .obj .meta strong{font-size:15px}
+    .obj .meta small{font-size:12px;opacity:0.8}
 
-  /* small responsive tweaks */
-  @media (max-width:420px){:root{--page-width:340px} .app{height:92px} .avatar{width:64px;height:64px;border-radius:12px}}
+    /* Specific icons styling */
+    .icon.envelope{background:linear-gradient(180deg,#e6d7c1,#ded0bf)}
+    .icon.phone{background:linear-gradient(180deg,#f0f7ff,#dfeefc)}
+    .icon.whatsapp{background:linear-gradient(180deg,#eaf7ee,#d8f0df)}
+    .icon.card{background:linear-gradient(180deg,#fff4e6,#fdeed8)}
 
-  /* Utility: skeleton for avatar when missing */
-  .avatar .placeholder{font-size:20px;color:var(--muted)}
+    /* Footer */
+    .desk:after{content:'';position:absolute;left:10px;right:10px;bottom:-32px;height:26px;background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.6));filter:blur(14px);border-radius:10px}
+
+    /* Responsive rules */
+    @media(max-width:800px){
+      .desk{flex-direction:column;align-items:center}
+      .books{width:100%}
+      .objects{width:100%}
+      .book{width:92%}
+      .shelf{height:100px}
+      .frame{width:92px;height:92px}
+    }
+
+    /* Small helper buttons */
+    .close-btn{position:absolute;right:12px;top:12px;background:#222;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px}
+
+    /* Accessible focus states */
+    .book:focus,.obj:focus{outline:3px solid rgba(255,200,0,0.18)}
+
   </style>
 </head>
-<body data-theme="day">
-  <div class="pattern" aria-hidden="true"></div>
-  <main class="frame" role="main">
-    <section class="card" aria-label="Personal card">
-      <div class="profile-row">
-        <div class="avatar" id="avatar">
-          <!-- Replace with your image later: <img src="/path/to/image.jpg" alt="Dhyey Lukhi"> -->
-          <div class="placeholder">DL</div>
-        </div>
-        <div class="name-block">
-          <div class="name">Dhyey Lukhi</div>
-          <div class="subtitle">Student — Cybersecurity & Detective thinker</div>
-        </div>
+<body>
+  <div class="stage">
+    <div class="shelf">
+      <div class="frame" id="profileFrame" title="View profile photo">
+        <!-- Replace with your photo file name in /assets/photo.jpg -->
+        <img src="/assets/photo.jpg" alt="Dhyey Lukhi" onerror="this.style.filter='grayscale(50%)';this.alt='Photo placeholder'" />
       </div>
-
-      <!-- App shelf: 6 icons (use anchors so they can be real links) -->
-      <div class="shelf" role="navigation" aria-label="Quick links">
-        <a class="app" id="lnk-linkedin" href="#" target="_blank" rel="noopener">
-          <div class="app-icon"><i class="fab fa-linkedin"></i></div>
-          <div class="label">LinkedIn</div>
-        </a>
-
-        <a class="app" id="lnk-whatsapp" href="#" target="_blank" rel="noopener">
-          <div class="app-icon"><i class="fab fa-whatsapp"></i></div>
-          <div class="label">WhatsApp</div>
-        </a>
-
-        <a class="app" id="lnk-email" href="#" target="_blank" rel="noopener">
-          <div class="app-icon"><i class="fas fa-envelope"></i></div>
-          <div class="label">Email</div>
-        </a>
-
-        <a class="app" id="lnk-phone" href="#" target="_blank" rel="noopener">
-          <div class="app-icon"><i class="fas fa-phone"></i></div>
-          <div class="label">Phone</div>
-        </a>
-
-        <a class="app" id="lnk-github" href="#" target="_blank" rel="noopener">
-          <div class="app-icon"><i class="fab fa-github"></i></div>
-          <div class="label">GitHub</div>
-        </a>
-
-        <a class="app" id="lnk-fun" href="#" target="_blank" rel="noopener">
-          <div class="app-icon"><i class="fas fa-gamepad"></i></div>
-          <div class="label">Fun</div>
-        </a>
+      <div class="identity">
+        <h1>Dhyey Lukhi</h1>
+        <p>Student • Aspiring Tech Leader • Detective-minded in Cybersecurity & Psychology</p>
       </div>
+    </div>
 
-      <!-- Chess.com panel -->
-      <div class="chess-panel" aria-live="polite">
-        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
-          <div style="font-weight:700">Chess</div>
-          <div style="font-size:0.85rem;color:var(--muted)" id="chess-user">@Dhyey_009</div>
-        </div>
-        <div class="chess-row" style="margin-top:10px;">
-          <div class="elo">
-            <div class="label">Rapid</div>
-            <div class="rating" id="rapid-rating">—</div>
-          </div>
-          <div class="elo">
-            <div class="label">Blitz</div>
-            <div class="rating" id="blitz-rating">—</div>
-          </div>
-          <div class="elo">
-            <div class="label">Bullet</div>
-            <div class="rating" id="bullet-rating">—</div>
+    <div class="desk" role="main">
+
+      <div class="books" aria-label="Interactive books">
+        <div tabindex="0" class="book leather" id="book-linkedin" data-type="linkedin">
+          <div class="cover">
+            <div style="width:86px;height:86px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <!-- LinkedIn logo SVG -->
+              <div class="logo" style="display:flex;align-items:center;justify-content:center;border-radius:6px;padding:8px;background:rgba(255,255,255,0.03)">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="3" fill="#0A66C2"/>
+                  <path d="M6.5 9.5H9V18H6.5V9.5ZM7.75 7.75C8.657 7.75 9.375 7.031 9.375 6.125C9.375 5.218 8.657 4.5 7.75 4.5C6.844 4.5 6.125 5.218 6.125 6.125C6.125 7.031 6.844 7.75 7.75 7.75Z" fill="#fff"/>
+                  <path d="M10.5 9.5H13V11H13.04C13.567 10.16 14.66 9.25 16.54 9.25C19.58 9.25 20 11.14 20 14.11V18H17.5V14.86C17.5 13.38 17.47 11.55 15.3 11.55C13.11 11.55 12.76 13.12 12.76 14.72V18H10.5V9.5Z" fill="#fff"/>
+                </svg>
+              </div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+              <div class="title">LinkedIn</div>
+              <div style="font-size:13px;color:#e7d7cc;margin-top:6px;">Open profile & posts</div>
+            </div>
           </div>
         </div>
-        <div class="chess-meta" id="chess-meta">Last updated: —</div>
-      </div>
 
-      <div class="controls">
-        <div class="theme-toggle">
-          <div style="font-size:0.86rem;opacity:0.9">Theme</div>
-          <div role="button" tabindex="0" aria-label="Toggle theme" class="switch" id="themeSwitch">
-            <div class="knob"></div>
+        <div tabindex="0" class="book leather" id="book-github" data-type="github">
+          <div class="cover">
+            <div style="width:86px;height:86px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <div class="logo">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="3" fill="#2B2B2B"/>
+                  <path d="M12 6C9.243 6 7 8.243 7 11c0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.757-2.243-5-4-5z" fill="#fff" opacity="0.95"/>
+                </svg>
+              </div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+              <div class="title">GitHub</div>
+              <div style="font-size:13px;color:#e7d7cc;margin-top:6px;">Open repos & code</div>
+            </div>
           </div>
         </div>
-        <div style="font-size:0.78rem;color:var(--muted);">Skeuo · Day/Night</div>
+
+        <div tabindex="0" class="book leather" id="book-chess" data-type="chess">
+          <div class="cover">
+            <div style="width:86px;height:86px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+              <div class="logo">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+                  <rect x="2" y="2" width="20" height="20" rx="3" fill="#d5c4a1"/>
+                  <path d="M6 18h12v2H6v-2zM12 3l4 6H8l4-6z" fill="#2b2b2b"/>
+                </svg>
+              </div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+              <div class="title">Chess ELO Ledger</div>
+              <div style="font-size:13px;color:#e7d7cc;margin-top:6px;">Live rating (chess.com)</div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="meta">Built for and optimized on iPhone SE & HP Pavilion. Replace links and avatar as needed.</div>
-    </section>
-  </main>
+      <div class="objects" aria-label="Contact objects">
+        <div class="obj" id="emailObj" tabindex="0" role="button" title="Click to copy email">
+          <div class="icon envelope" aria-hidden>
+            <!-- envelope SVG -->
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="1" y="4" width="22" height="16" rx="2" fill="#d6c7b3"/>
+              <path d="M2 6l10 7L22 6" stroke="#8b6a4a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="meta">
+            <strong>Email</strong>
+            <small id="emailVal">dhyey@example.com</small>
+          </div>
+        </div>
+
+        <div class="obj" id="phoneObj" tabindex="0" role="button" title="Tap to call on mobile">
+          <div class="icon phone">
+            <!-- phone SVG -->
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="2" width="14" height="20" rx="3" fill="#fff"/>
+              <circle cx="10" cy="18" r="1" fill="#d1d1d1"/>
+            </svg>
+          </div>
+          <div class="meta">
+            <strong>Phone</strong>
+            <small id="phoneVal">+91 98765 43210</small>
+          </div>
+        </div>
+
+        <div class="obj" id="waObj" tabindex="0" role="button" title="Open WhatsApp">
+          <div class="icon whatsapp">
+            <!-- whatsapp SVG simplified -->
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" fill="#eaf7ee"/>
+              <path d="M8 15s1.5-1 2.5-1 1.5.6 2 .9 1.6-.2 2.1-.6" stroke="#2b8a3e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="meta">
+            <strong>WhatsApp</strong>
+            <small id="waVal">+91 98765 43210</small>
+          </div>
+        </div>
+
+        <div class="obj" id="auObj" tabindex="0" role="button" title="View Among Us ID">
+          <div class="icon card">
+            <!-- small card SVG -->
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="4" width="18" height="14" rx="2" fill="#fff"/>
+              <circle cx="8" cy="11" r="2" fill="#ffd1b3"/>
+            </svg>
+          </div>
+          <div class="meta">
+            <strong>Among Us</strong>
+            <small id="auVal">Dhyey#009</small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Viewer modal with simple two-page layout and basic page-turn animation -->
+  <div id="viewer" class="viewer" aria-hidden="true">
+    <div class="sheet" role="dialog" aria-modal="true">
+      <button class="close-btn" id="closeViewer">Close</button>
+      <div class="pager" id="pager">
+        <div class="page left" id="leftPage">
+          <h3 id="leftTitle">Title</h3>
+          <div id="leftContent"><p>Left content</p></div>
+        </div>
+        <div class="page right" id="rightPage">
+          <h3 id="rightTitle">Title</h3>
+          <div id="rightContent"><p>Right content</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
-  /* -------- Configuration (edit these) -------- */
-  const CONFIG = {
-    chessUsername: 'Dhyey_009',
-    chessCacheHours: 24, // refresh interval for chess data
-    links: {
-      linkedin: '#',
-      whatsapp: '#',
-      email: 'mailto:your@email.com',
-      phone: 'tel:+919000000000',
-      github: '#',
-      fun: '#'
-    }
-  };
+    // Basic interactive behavior for the skeuomorphic desk page
+    const books = document.querySelectorAll('.book');
+    const viewer = document.getElementById('viewer');
+    const leftTitle = document.getElementById('leftTitle');
+    const rightTitle = document.getElementById('rightTitle');
+    const leftContent = document.getElementById('leftContent');
+    const rightContent = document.getElementById('rightContent');
+    const closeViewer = document.getElementById('closeViewer');
 
-  // Wire up placeholders to anchors so you can paste real links easily
-  document.getElementById('lnk-linkedin').href = CONFIG.links.linkedin;
-  document.getElementById('lnk-whatsapp').href = CONFIG.links.whatsapp;
-  document.getElementById('lnk-email').href = CONFIG.links.email;
-  document.getElementById('lnk-phone').href = CONFIG.links.phone;
-  document.getElementById('lnk-github').href = CONFIG.links.github;
-  document.getElementById('lnk-fun').href = CONFIG.links.fun;
-
-  /* Theme logic: auto set based on local hour (7-19 day), allow manual toggle and remember preference */
-  const body = document.body;
-  const switchEl = document.getElementById('themeSwitch');
-
-  function applyTheme(theme){
-    body.setAttribute('data-theme', theme);
-    localStorage.setItem('theme-preference', theme);
-  }
-
-  function initTheme(){
-    const saved = localStorage.getItem('theme-preference');
-    if(saved){ applyTheme(saved); return; }
-    const hour = new Date().getHours();
-    const theme = (hour >= 7 && hour < 19) ? 'day' : 'night';
-    applyTheme(theme);
-  }
-
-  // toggle handler
-  function toggleTheme(){
-    const current = body.getAttribute('data-theme');
-    const next = current === 'day' ? 'night' : 'day';
-    applyTheme(next);
-  }
-  switchEl.addEventListener('click', toggleTheme);
-  switchEl.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); } });
-
-  /* Chess.com data fetching with caching in localStorage */
-  const rapidEl = document.getElementById('rapid-rating');
-  const blitzEl = document.getElementById('blitz-rating');
-  const bulletEl = document.getElementById('bullet-rating');
-  const metaEl = document.getElementById('chess-meta');
-  const chessUserEl = document.getElementById('chess-user');
-
-  chessUserEl.textContent = '@' + CONFIG.chessUsername;
-
-  async function fetchChessStats(){
-    const cacheKey = 'chess_cache_' + CONFIG.chessUsername;
-    try{
-      const raw = localStorage.getItem(cacheKey);
-      if(raw){
-        const data = JSON.parse(raw);
-        const ageHours = (Date.now() - (data.fetchedAt || 0)) / (1000*60*60);
-        if(ageHours < CONFIG.chessCacheHours){
-          renderChess(data.stats, data.fetchedAt);
-          return; // use cache
+    // Data files pattern: /data/<type>-posts.json (array of {title,url})
+    async function loadBookData(type){
+      // chess handled differently
+      if(type === 'chess'){
+        try{
+          const resp = await fetch('https://api.chess.com/pub/player/dhyey_009/stats');
+          if(!resp.ok) throw new Error('Chess API failed');
+          const json = await resp.json();
+          // build content with ratings
+          const rapid = json.chess_rapid?.last?.rating ?? 'N/A';
+          const blitz = json.chess_blitz?.last?.rating ?? 'N/A';
+          const bullet = json.chess_bullet?.last?.rating ?? 'N/A';
+          const out = `\n<ul>\n<li><strong>Rapid:</strong> ${rapid}</li>\n<li><strong>Blitz:</strong> ${blitz}</li>\n<li><strong>Bullet:</strong> ${bullet}</li>\n</ul>\n<p style=\"font-size:12px;color:#666;margin-top:10px\">Source: chess.com public API — updated on page load</p>`;
+          return [{title:'Current Ratings', content:out}];
+        }catch(e){
+          return [{title:'Ratings', content:'Unable to fetch ratings. You may be offline or the API blocked the request.'}];
         }
       }
-    }catch(e){ console.warn('chess cache read failed', e); }
 
-    // Fetch fresh
-    try{
-      const res = await fetch(`https://api.chess.com/pub/player/${encodeURIComponent(CONFIG.chessUsername)}/stats`);
-      if(!res.ok) throw new Error('Chess.com API error: ' + res.status);
-      const stats = await res.json();
-      const payload = { stats, fetchedAt: Date.now() };
-      try{ localStorage.setItem(cacheKey, JSON.stringify(payload)); }catch(e){ console.warn('chess cache write failed', e); }
-      renderChess(stats, payload.fetchedAt);
-    }catch(err){
-      console.error('Failed to fetch chess stats', err);
-      metaEl.textContent = 'Unable to load chess data';
+      // for linkedin and github we'll try to fetch static json file at /data/<type>-posts.json
+      try{
+        const resp = await fetch(`/data/${type}-posts.json`);
+        if(!resp.ok) throw new Error('no data');
+        const json = await resp.json();
+        // expect array of {title,url}
+        if(!Array.isArray(json) || json.length===0) return [{title:'No items', content:'Add items to /data/'+type+'-posts.json'}];
+        return json.map(it=>({title:it.title||it.url, content:`<a href="${it.url}" target="_blank" rel="noopener">Open link</a>`}))
+      }catch(e){
+        return [{title:'No data', content:'Place a JSON file at /data/'+type+'-posts.json containing an array of {title,url}'}];
+      }
     }
-  }
 
-  function safeRating(obj){
-    if(!obj) return '—';
-    if(typeof obj.last === 'object' && typeof obj.last.rating === 'number') return obj.last.rating;
-    if(typeof obj.rating === 'number') return obj.rating;
-    return '—';
-  }
+    // Open viewer for a book and populate pages
+    books.forEach(b=>{
+      b.addEventListener('click',async()=>{
+        const type = b.dataset.type;
+        viewer.classList.add('open');
+        viewer.setAttribute('aria-hidden','false');
+        document.body.style.overflow = 'hidden';
+        // load pages
+        const items = await loadBookData(type);
+        // show first two pages
+        populatePages(items,0);
+        // store in viewer
+        viewer._pages = items;
+        viewer._index = 0;
+      });
+      b.addEventListener('keypress', (e)=>{ if(e.key==='Enter' || e.key===' ') b.click(); });
+    });
 
-  function renderChess(stats, fetchedAt){
-    // Chess.com returns keys like chess_rapid, chess_blitz, chess_bullet OR chess_daily, chess_blitz etc depending on account
-    const rapid = stats.chess_rapid || stats.chess_daily || stats.rapid || null;
-    const blitz = stats.chess_blitz || stats.blitz || null;
-    const bullet = stats.chess_bullet || stats.bullet || null;
+    function populatePages(items, index){
+      const left = items[index] || {title:'',content:''};
+      const right = items[index+1] || {title:'',content:'<em>End of book</em>'};
+      leftTitle.textContent = left.title || '';
+      rightTitle.textContent = right.title || '';
+      leftContent.innerHTML = left.content || '';
+      rightContent.innerHTML = right.content || '';
+    }
 
-    rapidEl.textContent = safeRating(rapid);
-    blitzEl.textContent = safeRating(blitz);
-    bulletEl.textContent = safeRating(bullet);
+    // keyboard navigation and arrow handling for page turns
+    document.addEventListener('keydown',(e)=>{
+      if(!viewer.classList.contains('open')) return;
+      if(e.key === 'ArrowRight') turnForward();
+      if(e.key === 'ArrowLeft') turnBackward();
+      if(e.key === 'Escape') close();
+    });
 
-    const dt = new Date(fetchedAt || Date.now());
-    metaEl.textContent = 'Last updated: ' + dt.toLocaleString();
-  }
+    // simple page turn: advance by 2 pages
+    function turnForward(){
+      const items = viewer._pages||[]; let i = viewer._index||0;
+      if(i+2 < items.length){
+        viewer._index = i+2; populatePages(items, viewer._index);
+        animateTurn('forward');
+      }
+    }
+    function turnBackward(){
+      const items = viewer._pages||[]; let i = viewer._index||0;
+      if(i-2 >= 0){
+        viewer._index = i-2; populatePages(items, viewer._index);
+        animateTurn('back');
+      }
+    }
 
-  // Initialize
-  initTheme();
-  fetchChessStats();
+    function animateTurn(dir){
+      // add CSS class to right page for flip
+      const right = document.getElementById('rightPage');
+      right.classList.remove('flip');
+      void right.offsetWidth; // reflow
+      right.classList.add('flip');
+      setTimeout(()=>right.classList.remove('flip'),700);
+    }
 
-  // Accessibility: keyboard focus styles
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
-  });
+    closeViewer.addEventListener('click',close);
+    viewer.addEventListener('click',(e)=>{ if(e.target===viewer) close(); });
+    function close(){ viewer.classList.remove('open'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
+
+    // Contact interactions: copy to clipboard and open links on mobile
+    document.getElementById('emailObj').addEventListener('click',()=>{ copyText(document.getElementById('emailVal').textContent); showToast('Email copied'); });
+    document.getElementById('phoneObj').addEventListener('click',()=>{ const num = document.getElementById('phoneVal').textContent; if(isMobile()) location.href = 'tel:'+num.replace(/\s+/g,''); else copyText(num) && showToast('Phone copied'); });
+    document.getElementById('waObj').addEventListener('click',()=>{ const num = document.getElementById('waVal').textContent.replace(/\s+/g,''); if(isMobile()) location.href = 'https://wa.me/'+num.replace(/^\+/, ''); else showToast('Open WhatsApp on mobile to message'); });
+    document.getElementById('auObj').addEventListener('click',()=>{ copyText(document.getElementById('auVal').textContent); showToast('Among Us ID copied'); });
+
+    function copyText(text){ navigator.clipboard?.writeText(text).then(()=>true).catch(()=>false); }
+    function isMobile(){ return /Mobi|Android/i.test(navigator.userAgent); }
+
+    // small toast
+    function showToast(msg){
+      const t = document.createElement('div'); t.textContent = msg; t.style.position='fixed'; t.style.bottom='28px'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.background='rgba(0,0,0,0.7)'; t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='8px'; t.style.zIndex=9999; document.body.appendChild(t);
+      setTimeout(()=>{ t.style.transition='opacity .35s'; t.style.opacity='0'; setTimeout(()=>t.remove(),350); },1400);
+    }
+
+    // small progressive enhancement: swipe support for mobile viewer
+    let startX = 0; viewer.addEventListener('touchstart',e=>{ if(!viewer.classList.contains('open')) return; startX = e.touches[0].clientX; });
+    viewer.addEventListener('touchend',e=>{ if(!viewer.classList.contains('open')) return; const dx = (e.changedTouches[0].clientX - startX); if(dx < -40) turnForward(); if(dx > 40) turnBackward(); });
+
+    // Accessibility: focus trap when viewer is open (minimal)
+    document.addEventListener('focusin', (e)=>{ if(viewer.classList.contains('open') && !viewer.contains(e.target)) close(); });
+
+    // Notes for author / deployment:
+    // 1) Place your profile photo at /assets/photo.jpg (or edit IMG src). 
+    // 2) To populate LinkedIn/GitHub books, create /data/linkedin-posts.json and /data/github-posts.json on your server containing an array of {"title":"My post","url":"https://..."}.
+    // 3) Chess ELO is fetched from chess.com public API for username 'dhyey_009' (change in code if different).
+    // 4) This is a single-file prototype. For production, split CSS/JS and optimize images.
+
   </script>
 </body>
 </html>

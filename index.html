@@ -1,29 +1,339 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>Dhyey’s Bio</title>
-    <style>
-        body { 
-            font-family: Arial; 
-            margin: 40px; 
-        }
-        .card {
-            max-width: 500px;
-            padding: 20px;
-            border-radius: 15px;
-            background: #f5f5f5;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dhyey Lukhi — Personal Bio</title>
+  <meta name="description" content="Dhyey Lukhi — skeuomorphic personal link page with chess.com Elo panel" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+  /* -----------------------------
+     Skeuomorphic Personal Bio
+     - Single-file for GitHub Pages
+     - Replace placeholder links / image later
+     ------------------------------*/
+  :root{
+    --page-width: 360px;
+    --bg-day-1: #e6e2d3; /* warm paper */
+    --bg-day-2: #f6f2e8;
+    --bg-night-1: #0f1216; /* deep charcoal */
+    --bg-night-2: #1a1f24;
+    --panel-bg-day: linear-gradient(180deg,#faf6f0,#efe7d9);
+    --panel-bg-night: linear-gradient(180deg,#16181a,#0d0f11);
+    --accent: #b8860b; /* warm gold tone */
+    --muted: #66625a;
+    --glass: rgba(255,255,255,0.06);
+    --shadow-dark: rgba(0,0,0,0.35);
+    --shadow-light: rgba(255,255,255,0.6);
+    --radius: 18px;
+    --icon-size: 58px;
+    --text-color-day: #2b2b2b;
+    --text-color-night: #e6e6e6;
+    --skeuo-border: rgba(0,0,0,0.12);
+  }
+
+  html,body{height:100%;margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;}
+
+  /* Page background layers: linen + subtle Victorian pattern (CSS) + spotlight */
+  body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;transition:background 0.45s ease;color:var(--text-color-day);}
+
+  /* Day mode */
+  body[data-theme="day"]{
+    background: radial-gradient(1200px 600px at 50% 8%, rgba(255,255,240,0.5), transparent 8%), linear-gradient(180deg,var(--bg-day-1),var(--bg-day-2));
+    background-blend-mode: overlay;
+    color:var(--text-color-day);
+    -webkit-font-smoothing:antialiased;
+  }
+  /* Night mode */
+  body[data-theme="night"]{
+    background: radial-gradient(900px 420px at 50% 12%, rgba(255,255,255,0.02), transparent 8%), linear-gradient(180deg,var(--bg-night-1),var(--bg-night-2));
+    color:var(--text-color-night);
+  }
+
+  /* subtle repeating pattern to hint Victorian wallpaper (very faint) */
+  .pattern{
+    position:fixed;inset:0;pointer-events:none;opacity:0.06;background-image:repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0 1px, transparent 1px 14px), radial-gradient(circle at 10px 10px, rgba(0,0,0,0.01), transparent 20px);
+  }
+
+  /* Container */
+  .frame{width:var(--page-width);max-width:100%;}
+
+  /* Header: Skeuo card top bar */
+  .card{
+    border-radius:22px;
+    padding:18px;
+    box-sizing:border-box;
+    background:var(--panel-bg-day);
+    box-shadow: 0 18px 28px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.6);
+    border:1px solid rgba(0,0,0,0.12);
+    position:relative;
+    overflow:hidden;
+    transition:background 0.45s, box-shadow 0.45s, color 0.45s;
+  }
+  body[data-theme="night"] .card{background:var(--panel-bg-night);box-shadow: 0 18px 28px rgba(0,0,0,0.6), inset 0 -1px 0 rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.02);}
+
+  /* Top header decorations that mimic stitched leather with stitching lines */
+  .card::before{
+    content:"";position:absolute;inset:auto 0 65% 0;height:46px;border-radius:14px;background:linear-gradient(180deg, rgba(0,0,0,0.03), rgba(255,255,255,0.08));box-shadow:inset 0 -4px 8px rgba(0,0,0,0.08);pointer-events:none;
+  }
+
+  /* Profile row */
+  .profile-row{display:flex;gap:12px;align-items:center}
+  .avatar{
+    width:72px;height:72px;border-radius:16px;flex:0 0 72px;overflow:hidden;background:linear-gradient(180deg, #fff,#eee);box-shadow: 0 6px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;border:1px solid rgba(0,0,0,0.08);
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .name-block{flex:1}
+  .name-block .name{font-weight:700;font-size:1.05rem;letter-spacing:0.2px}
+  .name-block .subtitle{font-size:0.78rem;color:var(--muted);margin-top:6px}
+  body[data-theme="night"] .name-block .subtitle{color:rgba(255,255,255,0.55)}
+
+  /* Skeuomorphic shelf for icons */
+  .shelf{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;margin-bottom:8px}
+  .app{
+    width:calc((100% - 24px)/3); /* three across */
+    height:86px;border-radius:14px;padding:8px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;color:inherit;
+    background:linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.06));border:1px solid rgba(0,0,0,0.12);box-shadow: 0 8px 16px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition:transform 0.18s cubic-bezier(.2,.9,.3,1),box-shadow 0.18s;
+  }
+  body[data-theme="night"] .app{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.02);box-shadow: 0 10px 18px rgba(0,0,0,0.6), inset 0 -2px 6px rgba(255,255,255,0.02)}
+  .app:active{transform:translateY(2px)}
+  .app .app-icon{width:var(--icon-size);height:var(--icon-size);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow: 0 8px 12px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);}
+  .app .label{font-size:0.7rem;margin-top:6px;opacity:0.95}
+
+  /* Chess panel - skeu metal plate */
+  .chess-panel{margin-top:14px;border-radius:12px;padding:12px;background:linear-gradient(180deg,#bfb5a2,#e7dcc3);box-shadow: 0 10px 24px rgba(0,0,0,0.28), inset 0 2px 0 rgba(255,255,255,0.6);border:1px solid rgba(0,0,0,0.14)}
+  body[data-theme="night"] .chess-panel{background:linear-gradient(180deg,#2a2d2f,#161718);box-shadow: 0 12px 28px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
+  .chess-row{display:flex;gap:12px;align-items:center}
+  .elo{flex:1;text-align:center}
+  .elo .label{font-size:0.75rem;margin-bottom:6px;opacity:0.9}
+  .elo .rating{font-weight:700;font-size:1.12rem}
+  .chess-meta{font-size:0.75rem;color:var(--muted);margin-top:8px;text-align:center}
+
+  /* Footer small text */
+  .meta{font-size:0.72rem;color:var(--muted);text-align:center;margin-top:12px}
+  body[data-theme="night"] .meta{color:rgba(255,255,255,0.57)}
+
+  /* Toggle switch */
+  .controls{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px}
+  .theme-toggle{display:inline-flex;gap:8px;align-items:center}
+  .switch{width:56px;height:30px;border-radius:20px;background:linear-gradient(180deg,#f4f1ec,#d8d0bf);border:1px solid rgba(0,0,0,0.12);padding:4px;display:inline-flex;align-items:center;position:relative;cursor:pointer}
+  .switch .knob{width:22px;height:22px;border-radius:50%;background:white;box-shadow:0 6px 12px rgba(0,0,0,0.25);transform:translateX(0);transition:transform 0.28s cubic-bezier(.2,.9,.3,1);}
+  body[data-theme="night"] .switch{background:linear-gradient(180deg,#0b0d0f,#1d1f22);border:1px solid rgba(255,255,255,0.04)}
+  body[data-theme="night"] .switch .knob{transform:translateX(26px);background:#111}
+
+  /* small responsive tweaks */
+  @media (max-width:420px){:root{--page-width:340px} .app{height:92px} .avatar{width:64px;height:64px;border-radius:12px}}
+
+  /* Utility: skeleton for avatar when missing */
+  .avatar .placeholder{font-size:20px;color:var(--muted)}
+  </style>
 </head>
-<body>
-    <div class="card">
-        <h1>Dhyey Lukhi</h1>
-        <p>Student | Cyber Security Aspirant | Future Apple CEO</p>
-        <p>Links:</p>
-        <ul>
-            <li><a href="https://github.com/YOUR_USERNAME">GitHub</a></li>
-            <li><a href="mailto:YOUR_EMAIL">Email</a></li>
-        </ul>
-    </div>
+<body data-theme="day">
+  <div class="pattern" aria-hidden="true"></div>
+  <main class="frame" role="main">
+    <section class="card" aria-label="Personal card">
+      <div class="profile-row">
+        <div class="avatar" id="avatar">
+          <!-- Replace with your image later: <img src="/path/to/image.jpg" alt="Dhyey Lukhi"> -->
+          <div class="placeholder">DL</div>
+        </div>
+        <div class="name-block">
+          <div class="name">Dhyey Lukhi</div>
+          <div class="subtitle">Student — Cybersecurity & Detective thinker</div>
+        </div>
+      </div>
+
+      <!-- App shelf: 6 icons (use anchors so they can be real links) -->
+      <div class="shelf" role="navigation" aria-label="Quick links">
+        <a class="app" id="lnk-linkedin" href="#" target="_blank" rel="noopener">
+          <div class="app-icon"><i class="fab fa-linkedin"></i></div>
+          <div class="label">LinkedIn</div>
+        </a>
+
+        <a class="app" id="lnk-whatsapp" href="#" target="_blank" rel="noopener">
+          <div class="app-icon"><i class="fab fa-whatsapp"></i></div>
+          <div class="label">WhatsApp</div>
+        </a>
+
+        <a class="app" id="lnk-email" href="#" target="_blank" rel="noopener">
+          <div class="app-icon"><i class="fas fa-envelope"></i></div>
+          <div class="label">Email</div>
+        </a>
+
+        <a class="app" id="lnk-phone" href="#" target="_blank" rel="noopener">
+          <div class="app-icon"><i class="fas fa-phone"></i></div>
+          <div class="label">Phone</div>
+        </a>
+
+        <a class="app" id="lnk-github" href="#" target="_blank" rel="noopener">
+          <div class="app-icon"><i class="fab fa-github"></i></div>
+          <div class="label">GitHub</div>
+        </a>
+
+        <a class="app" id="lnk-fun" href="#" target="_blank" rel="noopener">
+          <div class="app-icon"><i class="fas fa-gamepad"></i></div>
+          <div class="label">Fun</div>
+        </a>
+      </div>
+
+      <!-- Chess.com panel -->
+      <div class="chess-panel" aria-live="polite">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div style="font-weight:700">Chess</div>
+          <div style="font-size:0.85rem;color:var(--muted)" id="chess-user">@Dhyey_009</div>
+        </div>
+        <div class="chess-row" style="margin-top:10px;">
+          <div class="elo">
+            <div class="label">Rapid</div>
+            <div class="rating" id="rapid-rating">—</div>
+          </div>
+          <div class="elo">
+            <div class="label">Blitz</div>
+            <div class="rating" id="blitz-rating">—</div>
+          </div>
+          <div class="elo">
+            <div class="label">Bullet</div>
+            <div class="rating" id="bullet-rating">—</div>
+          </div>
+        </div>
+        <div class="chess-meta" id="chess-meta">Last updated: —</div>
+      </div>
+
+      <div class="controls">
+        <div class="theme-toggle">
+          <div style="font-size:0.86rem;opacity:0.9">Theme</div>
+          <div role="button" tabindex="0" aria-label="Toggle theme" class="switch" id="themeSwitch">
+            <div class="knob"></div>
+          </div>
+        </div>
+        <div style="font-size:0.78rem;color:var(--muted);">Skeuo · Day/Night</div>
+      </div>
+
+      <div class="meta">Built for and optimized on iPhone SE & HP Pavilion. Replace links and avatar as needed.</div>
+    </section>
+  </main>
+
+  <script>
+  /* -------- Configuration (edit these) -------- */
+  const CONFIG = {
+    chessUsername: 'Dhyey_009',
+    chessCacheHours: 24, // refresh interval for chess data
+    links: {
+      linkedin: '#',
+      whatsapp: '#',
+      email: 'mailto:your@email.com',
+      phone: 'tel:+919000000000',
+      github: '#',
+      fun: '#'
+    }
+  };
+
+  // Wire up placeholders to anchors so you can paste real links easily
+  document.getElementById('lnk-linkedin').href = CONFIG.links.linkedin;
+  document.getElementById('lnk-whatsapp').href = CONFIG.links.whatsapp;
+  document.getElementById('lnk-email').href = CONFIG.links.email;
+  document.getElementById('lnk-phone').href = CONFIG.links.phone;
+  document.getElementById('lnk-github').href = CONFIG.links.github;
+  document.getElementById('lnk-fun').href = CONFIG.links.fun;
+
+  /* Theme logic: auto set based on local hour (7-19 day), allow manual toggle and remember preference */
+  const body = document.body;
+  const switchEl = document.getElementById('themeSwitch');
+
+  function applyTheme(theme){
+    body.setAttribute('data-theme', theme);
+    localStorage.setItem('theme-preference', theme);
+  }
+
+  function initTheme(){
+    const saved = localStorage.getItem('theme-preference');
+    if(saved){ applyTheme(saved); return; }
+    const hour = new Date().getHours();
+    const theme = (hour >= 7 && hour < 19) ? 'day' : 'night';
+    applyTheme(theme);
+  }
+
+  // toggle handler
+  function toggleTheme(){
+    const current = body.getAttribute('data-theme');
+    const next = current === 'day' ? 'night' : 'day';
+    applyTheme(next);
+  }
+  switchEl.addEventListener('click', toggleTheme);
+  switchEl.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleTheme(); } });
+
+  /* Chess.com data fetching with caching in localStorage */
+  const rapidEl = document.getElementById('rapid-rating');
+  const blitzEl = document.getElementById('blitz-rating');
+  const bulletEl = document.getElementById('bullet-rating');
+  const metaEl = document.getElementById('chess-meta');
+  const chessUserEl = document.getElementById('chess-user');
+
+  chessUserEl.textContent = '@' + CONFIG.chessUsername;
+
+  async function fetchChessStats(){
+    const cacheKey = 'chess_cache_' + CONFIG.chessUsername;
+    try{
+      const raw = localStorage.getItem(cacheKey);
+      if(raw){
+        const data = JSON.parse(raw);
+        const ageHours = (Date.now() - (data.fetchedAt || 0)) / (1000*60*60);
+        if(ageHours < CONFIG.chessCacheHours){
+          renderChess(data.stats, data.fetchedAt);
+          return; // use cache
+        }
+      }
+    }catch(e){ console.warn('chess cache read failed', e); }
+
+    // Fetch fresh
+    try{
+      const res = await fetch(`https://api.chess.com/pub/player/${encodeURIComponent(CONFIG.chessUsername)}/stats`);
+      if(!res.ok) throw new Error('Chess.com API error: ' + res.status);
+      const stats = await res.json();
+      const payload = { stats, fetchedAt: Date.now() };
+      try{ localStorage.setItem(cacheKey, JSON.stringify(payload)); }catch(e){ console.warn('chess cache write failed', e); }
+      renderChess(stats, payload.fetchedAt);
+    }catch(err){
+      console.error('Failed to fetch chess stats', err);
+      metaEl.textContent = 'Unable to load chess data';
+    }
+  }
+
+  function safeRating(obj){
+    if(!obj) return '—';
+    if(typeof obj.last === 'object' && typeof obj.last.rating === 'number') return obj.last.rating;
+    if(typeof obj.rating === 'number') return obj.rating;
+    return '—';
+  }
+
+  function renderChess(stats, fetchedAt){
+    // Chess.com returns keys like chess_rapid, chess_blitz, chess_bullet OR chess_daily, chess_blitz etc depending on account
+    const rapid = stats.chess_rapid || stats.chess_daily || stats.rapid || null;
+    const blitz = stats.chess_blitz || stats.blitz || null;
+    const bullet = stats.chess_bullet || stats.bullet || null;
+
+    rapidEl.textContent = safeRating(rapid);
+    blitzEl.textContent = safeRating(blitz);
+    bulletEl.textContent = safeRating(bullet);
+
+    const dt = new Date(fetchedAt || Date.now());
+    metaEl.textContent = 'Last updated: ' + dt.toLocaleString();
+  }
+
+  // Initialize
+  initTheme();
+  fetchChessStats();
+
+  // Accessibility: keyboard focus styles
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Tab') document.body.classList.add('user-is-tabbing');
+  });
+  </script>
 </body>
 </html>

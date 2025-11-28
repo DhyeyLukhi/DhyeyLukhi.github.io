@@ -1,425 +1,139 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dhyey Lukhi — Skeuomorphic Bio</title>
-  <style>
-    /* Reset */
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#222}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>4-Floor Depth Shelf</title>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f0f0f0;
+    padding: 40px;
+    margin: 0;
+  }
 
-    /* Background: dark walnut wooden desk */
-    body{
-      background: linear-gradient(180deg,#3b2a1a 0%, #2f1f13 100%);
-      background-image:
-        linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.06) 100%);
-      min-height:100vh;
-      display:flex;align-items:center;justify-content:center;padding:24px;
-    }
+  .shelf-wrapper {
+    width: 80%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+  }
 
-    /* Central stage */
-    .stage{width:100%;max-width:1100px;display:flex;flex-direction:column;gap:28px}
+  .shelf {
+    width: 100%;
+    height: 0px;
+    position: relative;
+    border-bottom: 16px solid #f3f3f3;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+  }
 
-    /* Shelf */
-    .shelf{
-  width:100%;
-  height:240px;
-  background:#3a291b;
-  background-image:url('assets/wood-dark-walnut.jpg');
-  background-size:cover;
-  background-position:center;
-  border-radius:12px;
-  padding:0;
-  position:relative;
-  box-shadow:
-    inset 0 0 40px rgba(0,0,0,0.55),
-    inset 0 12px 18px rgba(0,0,0,0.45),
-    inset 0 -12px 18px rgba(0,0,0,0.45),
-    0 14px 40px rgba(0,0,0,0.7);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.shelf:before{content:'';position:absolute;left:20px;right:20px;bottom:-14px;height:16px;background:rgba(0,0,0,0.4);filter:blur(10px);border-radius:8px;}
-    .shelf:before{content:'';position:absolute;left:12px;right:12px;bottom:-12px;height:14px; background:rgba(0,0,0,0.35);filter:blur(8px);border-radius:6px}
+  .shelf::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    background: linear-gradient(90deg, #fafafa 0%, #ffffff 100%);
+    height: 26px;
+    width: calc(100% + 40px);
+    box-shadow: 0px -1px 6px rgba(0, 0, 0, 0.05), 0px 4px 16px rgba(0, 0, 0, 0.25);
+    z-index: 2;
+  }
 
-    /* Photo frame */
-.shelf-frame{
-  width:160px;
-  height:200px;
-  background:url('assets/frame-wood.png');
-  background-size:cover;
-  padding:12px;
-  border-radius:10px;
-  box-shadow:0 6px 14px rgba(0,0,0,0.6), inset 0 2px 6px rgba(255,255,255,0.4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.shelf-frame img{
-  width:100%;height:100%;object-fit:cover;border-radius:8px;
-}
-.identity{color:#fdeccf}
-    .identity h1{font-size:20px;letter-spacing:0.6px}
-    .identity p{opacity:0.9;margin-top:6px;font-size:13px}
+  .shelf::after {
+    content: "";
+    height: 80px;
+    width: calc(100% + 40px);
+    position: absolute;
+    top: 42px;
+    background: linear-gradient(180deg, #f3f3f3 0%, rgba(255, 255, 255, 0) 100%);
+    clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
+    z-index: -1;
+  }
+.photo-frame {
+    position: absolute;
+    left: 0;
+    top: -140px;
+    width: 140px;
+    height: 180px;
+    border: 8px solid #6e563a;
+    border-radius: 6px;
+    background: url('photo.jpg') center/cover no-repeat;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 0 12px rgba(0,0,0,0.4);
+    background-color: #d2b48c;
+  }
+.photo-frame {
+    position: absolute;
+    left: 10px;
+    top: -160px;
+    width: 140px;
+    height: 180px;
+    border: 8px solid #6e563a;
+    border-radius: 6px;
+    background: url('photo.jpg') center/cover no-repeat;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 0 12px rgba(0,0,0,0.4);
+    background-color: #d2b48c;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    z-index: 5;
+  }
 
-    /* Desk area with books and objects */
-    .desk{background:linear-gradient(180deg,#2b1a0f 0,#1f130a 100%);border-radius:14px;padding:28px;display:flex;flex-direction:row;gap:24px;align-items:flex-start;box-shadow:0 18px 50px rgba(0,0,0,0.7);position:relative}
+  .photo-frame:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 26px rgba(0,0,0,0.45);
+  }
 
-    /* Left column: books */
-    .books{display:flex;flex-direction:column;gap:18px;width:420px}
-    .book{width:420px;height:140px;position:relative;perspective:1400px;cursor:pointer}
-    .book .cover{
-      position:absolute;left:0;top:0;right:0;bottom:0;border-radius:8px;box-shadow:0 16px 40px rgba(0,0,0,0.6);display:flex;align-items:center;padding:18px;gap:16px;transform-origin:left center;transition:transform .45s cubic-bezier(.2,.9,.3,1),box-shadow .2s;
-      background-image:linear-gradient(180deg,rgba(0,0,0,0.06),rgba(0,0,0,0.12));
-      background-size:cover;background-position:center;overflow:hidden
-    }
-    /* Leather texture using subtle noise via gradients */
-    .book.leather .cover{background:linear-gradient(180deg,#4a2b1f,#3b2218);background-blend-mode:multiply}
-    .book.leather .logo{background:rgba(255,255,255,0.06);padding:10px;border-radius:6px;box-shadow:inset 0 -2px 8px rgba(0,0,0,0.6),0 6px 12px rgba(0,0,0,0.45)}
-    .book .title{color:#f4e9df;font-weight:600;font-size:16px}
-    .book:hover .cover{transform:translateX(10px) rotateY(-6deg)}
+  .photo-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
 
-    /* Book viewer modal */
-    .viewer{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:1200}
-    .viewer.open{display:flex}
-    .viewer .sheet{width:min(920px,95%);height:min(620px,86%);background:linear-gradient(180deg,#fbf7ef,#efe6d6);border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,0.7);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+  .photo-modal img {
+    width: 320px;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    border: 10px solid #6e563a;
+    background: #d2b48c;
+  }
 
-    .pager{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:86%;height:86%;display:flex;align-items:center;justify-content:center;gap:6px}
-    .page{width:48%;height:92%;background:#fff;border-radius:4px;box-shadow:0 12px 30px rgba(0,0,0,0.28);overflow:hidden;position:relative;padding:20px;backface-visibility:hidden}
-
-    /* page flip effect */
-    .page.left{transform-origin:right center}
-    .page.right{transform-origin:left center}
-    .page.flip{animation:pageFlip .6s ease forwards}
-    @keyframes pageFlip{
-      0%{transform:rotateY(0)}
-      100%{transform:rotateY(-180deg)}
-    }
-
-    .page h3{font-size:16px;margin-bottom:8px}
-    .page p{font-size:14px;line-height:1.4;color:#222}
-
-    /* Right column: contact objects */
-    .objects{width:320px;display:flex;flex-direction:column;gap:16px}
-    .obj{background:linear-gradient(180deg,#f7f3ea,#ebe0d0);border-radius:10px;padding:14px;display:flex;gap:12px;align-items:center;box-shadow:0 12px 32px rgba(0,0,0,0.4)}
-    .obj .icon{width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:inset 0 -6px 10px rgba(0,0,0,0.08)}
-    .obj .meta{display:flex;flex-direction:column}
-    .obj .meta strong{font-size:15px}
-    .obj .meta small{font-size:12px;opacity:0.8}
-
-    /* Specific icons styling */
-    .icon.envelope{background:linear-gradient(180deg,#e6d7c1,#ded0bf)}
-    .icon.phone{background:linear-gradient(180deg,#f0f7ff,#dfeefc)}
-    .icon.whatsapp{background:linear-gradient(180deg,#eaf7ee,#d8f0df)}
-    .icon.card{background:linear-gradient(180deg,#fff4e6,#fdeed8)}
-
-    /* Footer */
-    .desk:after{content:'';position:absolute;left:10px;right:10px;bottom:-32px;height:26px;background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.6));filter:blur(14px);border-radius:10px}
-
-    /* Responsive rules */
-    @media(max-width:800px){
-      .desk{flex-direction:column;align-items:center}
-      .books{width:100%}
-      .objects{width:100%}
-      .book{width:92%}
-      .shelf{height:100px}
-      .frame{width:92px;height:92px}
-    }
-
-    /* Small helper buttons */
-    .close-btn{position:absolute;right:12px;top:12px;background:#222;color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px}
-
-    /* Accessible focus states */
-    .book:focus,.obj:focus{outline:3px solid rgba(255,200,0,0.18)}
-
-  </style>
+</style>
 </head>
 <body>
-  <div class="stage">
+  <div class="shelf-wrapper">
     <div class="shelf">
-      <div class="frame" id="profileFrame" title="View profile photo">
-        <!-- Replace with your photo file name in /assets/photo.jpg -->
-        <img src="/assets/photo.jpg" alt="Dhyey Lukhi" onerror="this.style.filter='grayscale(50%)';this.alt='Photo placeholder'" />
-      </div>
-      <div class="identity">
-        <h1>Dhyey Lukhi</h1>
-        <p>Student • Aspiring Tech Leader • Detective-minded in Cybersecurity & Psychology</p>
-      </div>
+      <div class="photo-frame"></div>
     </div>
-
-    <div class="desk" role="main">
-
-      <div class="books" aria-label="Interactive books">
-        <div tabindex="0" class="book leather" id="book-linkedin" data-type="linkedin">
-          <div class="cover">
-            <div style="width:86px;height:86px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
-              <!-- LinkedIn logo SVG -->
-              <div class="logo" style="display:flex;align-items:center;justify-content:center;border-radius:6px;padding:8px;background:rgba(255,255,255,0.03)">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <rect x="2" y="2" width="20" height="20" rx="3" fill="#0A66C2"/>
-                  <path d="M6.5 9.5H9V18H6.5V9.5ZM7.75 7.75C8.657 7.75 9.375 7.031 9.375 6.125C9.375 5.218 8.657 4.5 7.75 4.5C6.844 4.5 6.125 5.218 6.125 6.125C6.125 7.031 6.844 7.75 7.75 7.75Z" fill="#fff"/>
-                  <path d="M10.5 9.5H13V11H13.04C13.567 10.16 14.66 9.25 16.54 9.25C19.58 9.25 20 11.14 20 14.11V18H17.5V14.86C17.5 13.38 17.47 11.55 15.3 11.55C13.11 11.55 12.76 13.12 12.76 14.72V18H10.5V9.5Z" fill="#fff"/>
-                </svg>
-              </div>
-            </div>
-            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-              <div class="title">LinkedIn</div>
-              <div style="font-size:13px;color:#e7d7cc;margin-top:6px;">Open profile & posts</div>
-            </div>
-          </div>
-        </div>
-
-        <div tabindex="0" class="book leather" id="book-github" data-type="github">
-          <div class="cover">
-            <div style="width:86px;height:86px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
-              <div class="logo">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <rect x="2" y="2" width="20" height="20" rx="3" fill="#2B2B2B"/>
-                  <path d="M12 6C9.243 6 7 8.243 7 11c0 2.209 1.791 4 4 4s4-1.791 4-4c0-2.757-2.243-5-4-5z" fill="#fff" opacity="0.95"/>
-                </svg>
-              </div>
-            </div>
-            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-              <div class="title">GitHub</div>
-              <div style="font-size:13px;color:#e7d7cc;margin-top:6px;">Open repos & code</div>
-            </div>
-          </div>
-        </div>
-
-        <div tabindex="0" class="book leather" id="book-chess" data-type="chess">
-          <div class="cover">
-            <div style="width:86px;height:86px;border-radius:6px;display:flex;align-items:center;justify-content:center;">
-              <div class="logo">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                  <rect x="2" y="2" width="20" height="20" rx="3" fill="#d5c4a1"/>
-                  <path d="M6 18h12v2H6v-2zM12 3l4 6H8l4-6z" fill="#2b2b2b"/>
-                </svg>
-              </div>
-            </div>
-            <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
-              <div class="title">Chess ELO Ledger</div>
-              <div style="font-size:13px;color:#e7d7cc;margin-top:6px;">Live rating (chess.com)</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="objects" aria-label="Contact objects">
-        <div class="obj" id="emailObj" tabindex="0" role="button" title="Click to copy email">
-          <div class="icon envelope" aria-hidden>
-            <!-- envelope SVG -->
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="4" width="22" height="16" rx="2" fill="#d6c7b3"/>
-              <path d="M2 6l10 7L22 6" stroke="#8b6a4a" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="meta">
-            <strong>Email</strong>
-            <small id="emailVal">dhyey@example.com</small>
-          </div>
-        </div>
-
-        <div class="obj" id="phoneObj" tabindex="0" role="button" title="Tap to call on mobile">
-          <div class="icon phone">
-            <!-- phone SVG -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="2" width="14" height="20" rx="3" fill="#fff"/>
-              <circle cx="10" cy="18" r="1" fill="#d1d1d1"/>
-            </svg>
-          </div>
-          <div class="meta">
-            <strong>Phone</strong>
-            <small id="phoneVal">+91 98765 43210</small>
-          </div>
-        </div>
-
-        <div class="obj" id="waObj" tabindex="0" role="button" title="Open WhatsApp">
-          <div class="icon whatsapp">
-            <!-- whatsapp SVG simplified -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="12" cy="12" r="10" fill="#eaf7ee"/>
-              <path d="M8 15s1.5-1 2.5-1 1.5.6 2 .9 1.6-.2 2.1-.6" stroke="#2b8a3e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="meta">
-            <strong>WhatsApp</strong>
-            <small id="waVal">+91 98765 43210</small>
-          </div>
-        </div>
-
-        <div class="obj" id="auObj" tabindex="0" role="button" title="View Among Us ID">
-          <div class="icon card">
-            <!-- small card SVG -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="4" width="18" height="14" rx="2" fill="#fff"/>
-              <circle cx="8" cy="11" r="2" fill="#ffd1b3"/>
-            </svg>
-          </div>
-          <div class="meta">
-            <strong>Among Us</strong>
-            <small id="auVal">Dhyey#009</small>
-          </div>
-        </div>
-
-      </div>
-    </div>
+    <div class="shelf"></div>
+    <div class="shelf"></div>
+    <div class="shelf"></div>
+  </div>
+  <div class="photo-modal" id="photoModal">
+    <img src="photo.jpg" alt="Photo" />
   </div>
 
-  <!-- Viewer modal with simple two-page layout and basic page-turn animation -->
-  <div id="viewer" class="viewer" aria-hidden="true">
-    <div class="sheet" role="dialog" aria-modal="true">
-      <button class="close-btn" id="closeViewer">Close</button>
-      <div class="pager" id="pager">
-        <div class="page left" id="leftPage">
-          <h3 id="leftTitle">Title</h3>
-          <div id="leftContent"><p>Left content</p></div>
-        </div>
-        <div class="page right" id="rightPage">
-          <h3 id="rightTitle">Title</h3>
-          <div id="rightContent"><p>Right content</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
+<script>
+  const frame = document.querySelector('.photo-frame');
+  const modal = document.getElementById('photoModal');
 
-  <script>
-    // Basic interactive behavior for the skeuomorphic desk page
-    const books = document.querySelectorAll('.book');
-    const viewer = document.getElementById('viewer');
-    const leftTitle = document.getElementById('leftTitle');
-    const rightTitle = document.getElementById('rightTitle');
-    const leftContent = document.getElementById('leftContent');
-    const rightContent = document.getElementById('rightContent');
-    const closeViewer = document.getElementById('closeViewer');
+  frame.addEventListener('click', () => {
+    modal.style.display = 'flex';
+  });
 
-    // Data files pattern: /data/<type>-posts.json (array of {title,url})
-    async function loadBookData(type){
-      // chess handled differently
-      if(type === 'chess'){
-        try{
-          const resp = await fetch('https://api.chess.com/pub/player/dhyey_009/stats');
-          if(!resp.ok) throw new Error('Chess API failed');
-          const json = await resp.json();
-          // build content with ratings
-          const rapid = json.chess_rapid?.last?.rating ?? 'N/A';
-          const blitz = json.chess_blitz?.last?.rating ?? 'N/A';
-          const bullet = json.chess_bullet?.last?.rating ?? 'N/A';
-          const out = `\n<ul>\n<li><strong>Rapid:</strong> ${rapid}</li>\n<li><strong>Blitz:</strong> ${blitz}</li>\n<li><strong>Bullet:</strong> ${bullet}</li>\n</ul>\n<p style=\"font-size:12px;color:#666;margin-top:10px\">Source: chess.com public API — updated on page load</p>`;
-          return [{title:'Current Ratings', content:out}];
-        }catch(e){
-          return [{title:'Ratings', content:'Unable to fetch ratings. You may be offline or the API blocked the request.'}];
-        }
-      }
-
-      // for linkedin and github we'll try to fetch static json file at /data/<type>-posts.json
-      try{
-        const resp = await fetch(`/data/${type}-posts.json`);
-        if(!resp.ok) throw new Error('no data');
-        const json = await resp.json();
-        // expect array of {title,url}
-        if(!Array.isArray(json) || json.length===0) return [{title:'No items', content:'Add items to /data/'+type+'-posts.json'}];
-        return json.map(it=>({title:it.title||it.url, content:`<a href="${it.url}" target="_blank" rel="noopener">Open link</a>`}))
-      }catch(e){
-        return [{title:'No data', content:'Place a JSON file at /data/'+type+'-posts.json containing an array of {title,url}'}];
-      }
-    }
-
-    // Open viewer for a book and populate pages
-    books.forEach(b=>{
-      b.addEventListener('click',async()=>{
-        const type = b.dataset.type;
-        viewer.classList.add('open');
-        viewer.setAttribute('aria-hidden','false');
-        document.body.style.overflow = 'hidden';
-        // load pages
-        const items = await loadBookData(type);
-        // show first two pages
-        populatePages(items,0);
-        // store in viewer
-        viewer._pages = items;
-        viewer._index = 0;
-      });
-      b.addEventListener('keypress', (e)=>{ if(e.key==='Enter' || e.key===' ') b.click(); });
-    });
-
-    function populatePages(items, index){
-      const left = items[index] || {title:'',content:''};
-      const right = items[index+1] || {title:'',content:'<em>End of book</em>'};
-      leftTitle.textContent = left.title || '';
-      rightTitle.textContent = right.title || '';
-      leftContent.innerHTML = left.content || '';
-      rightContent.innerHTML = right.content || '';
-    }
-
-    // keyboard navigation and arrow handling for page turns
-    document.addEventListener('keydown',(e)=>{
-      if(!viewer.classList.contains('open')) return;
-      if(e.key === 'ArrowRight') turnForward();
-      if(e.key === 'ArrowLeft') turnBackward();
-      if(e.key === 'Escape') close();
-    });
-
-    // simple page turn: advance by 2 pages
-    function turnForward(){
-      const items = viewer._pages||[]; let i = viewer._index||0;
-      if(i+2 < items.length){
-        viewer._index = i+2; populatePages(items, viewer._index);
-        animateTurn('forward');
-      }
-    }
-    function turnBackward(){
-      const items = viewer._pages||[]; let i = viewer._index||0;
-      if(i-2 >= 0){
-        viewer._index = i-2; populatePages(items, viewer._index);
-        animateTurn('back');
-      }
-    }
-
-    function animateTurn(dir){
-      // add CSS class to right page for flip
-      const right = document.getElementById('rightPage');
-      right.classList.remove('flip');
-      void right.offsetWidth; // reflow
-      right.classList.add('flip');
-      setTimeout(()=>right.classList.remove('flip'),700);
-    }
-
-    closeViewer.addEventListener('click',close);
-    viewer.addEventListener('click',(e)=>{ if(e.target===viewer) close(); });
-    function close(){ viewer.classList.remove('open'); viewer.setAttribute('aria-hidden','true'); document.body.style.overflow='auto'; }
-
-    // Contact interactions: copy to clipboard and open links on mobile
-    document.getElementById('emailObj').addEventListener('click',()=>{ copyText(document.getElementById('emailVal').textContent); showToast('Email copied'); });
-    document.getElementById('phoneObj').addEventListener('click',()=>{ const num = document.getElementById('phoneVal').textContent; if(isMobile()) location.href = 'tel:'+num.replace(/\s+/g,''); else copyText(num) && showToast('Phone copied'); });
-    document.getElementById('waObj').addEventListener('click',()=>{ const num = document.getElementById('waVal').textContent.replace(/\s+/g,''); if(isMobile()) location.href = 'https://wa.me/'+num.replace(/^\+/, ''); else showToast('Open WhatsApp on mobile to message'); });
-    document.getElementById('auObj').addEventListener('click',()=>{ copyText(document.getElementById('auVal').textContent); showToast('Among Us ID copied'); });
-
-    function copyText(text){ navigator.clipboard?.writeText(text).then(()=>true).catch(()=>false); }
-    function isMobile(){ return /Mobi|Android/i.test(navigator.userAgent); }
-
-    // small toast
-    function showToast(msg){
-      const t = document.createElement('div'); t.textContent = msg; t.style.position='fixed'; t.style.bottom='28px'; t.style.left='50%'; t.style.transform='translateX(-50%)'; t.style.background='rgba(0,0,0,0.7)'; t.style.color='#fff'; t.style.padding='10px 14px'; t.style.borderRadius='8px'; t.style.zIndex=9999; document.body.appendChild(t);
-      setTimeout(()=>{ t.style.transition='opacity .35s'; t.style.opacity='0'; setTimeout(()=>t.remove(),350); },1400);
-    }
-
-    // small progressive enhancement: swipe support for mobile viewer
-    let startX = 0; viewer.addEventListener('touchstart',e=>{ if(!viewer.classList.contains('open')) return; startX = e.touches[0].clientX; });
-    viewer.addEventListener('touchend',e=>{ if(!viewer.classList.contains('open')) return; const dx = (e.changedTouches[0].clientX - startX); if(dx < -40) turnForward(); if(dx > 40) turnBackward(); });
-
-    // Accessibility: focus trap when viewer is open (minimal)
-    document.addEventListener('focusin', (e)=>{ if(viewer.classList.contains('open') && !viewer.contains(e.target)) close(); });
-
-    // Notes for author / deployment:
-    // 1) Place your profile photo at /assets/photo.jpg (or edit IMG src). 
-    // 2) To populate LinkedIn/GitHub books, create /data/linkedin-posts.json and /data/github-posts.json on your server containing an array of {"title":"My post","url":"https://..."}.
-    // 3) Chess ELO is fetched from chess.com public API for username 'dhyey_009' (change in code if different).
-    // 4) This is a single-file prototype. For production, split CSS/JS and optimize images.
-
-  </script>
+  modal.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+</script>
 </body>
 </html>

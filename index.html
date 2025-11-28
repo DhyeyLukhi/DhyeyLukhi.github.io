@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Dhyey Lukhi</title>
+
 <style>
   body {
     display: flex;
@@ -13,19 +14,20 @@
     background: #f0f0f0;
     padding: 40px;
     margin: 0;
+    overflow-x: hidden;
   }
 
   /* Top Layer for Photo Frame */
   .top-layer {
     width: 80%;
-  max-width: 1000px;
-  display: flex;
-  justify-content: flex-start;
-  position: relative;
-  z-index: 50;
-  margin-bottom: -40px;
-  --photo-top: -26px;
-  --photo-left: 50px;
+    max-width: 1000px;
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 50;
+    margin-bottom: -40px;
+    --photo-top: -26px;
+    --photo-left: 50px;
   }
 
   .photo-frame {
@@ -36,11 +38,11 @@
     background: url('photo.jpg') center/cover no-repeat;
     background-color: #d2b48c;
     box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 0 12px rgba(0,0,0,0.4);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.25s ease, transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     position: relative;
-  top: var(--photo-top, 0px);
-  left: var(--photo-left, 0px);
+    top: var(--photo-top, 0px);
+    left: var(--photo-left, 0px);
   }
 
   .photo-frame:hover {
@@ -48,26 +50,43 @@
     box-shadow: 0 12px 26px rgba(0,0,0,0.45);
   }
 
+  /* MODAL */
   .photo-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.2);
     display: none;
     justify-content: center;
     align-items: center;
     z-index: 999;
   }
 
-  .photo-modal img {
+  /* Animation states */
+  .modal-image {
     width: 320px;
     height: auto;
     border-radius: 12px;
     box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     border: 10px solid #6e563a;
     background: #d2b48c;
+
+    transform: scale(0.6);
+    opacity: 0;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+  }
+
+  .modal-open {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .modal-close {
+    transform: scale(0.6);
+    opacity: 0;
   }
 
   /* SHELVES */
@@ -110,6 +129,7 @@
     clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
     z-index: -1;
   }
+
 </style>
 </head>
 <body>
@@ -126,19 +146,40 @@
   </div>
 
   <div class="photo-modal" id="photoModal">
-    <img src="photo.jpg" alt="Photo" />
+    <img src="photo.jpg" class="modal-image" id="modalImage" />
   </div>
 
 <script>
   const frame = document.querySelector('.photo-frame');
   const modal = document.getElementById('photoModal');
+  const modalImage = document.getElementById('modalImage');
 
+  // OPEN MODAL
   frame.addEventListener('click', () => {
+    frame.style.opacity = "0";
+    frame.style.pointerEvents = "none";
+
     modal.style.display = 'flex';
+
+    // Force repaint to trigger animation
+    setTimeout(() => {
+      modalImage.classList.add('modal-open');
+      modalImage.classList.remove('modal-close');
+    }, 10);
   });
 
+  // CLOSE MODAL
   modal.addEventListener('click', () => {
-    modal.style.display = 'none';
+
+    modalImage.classList.remove('modal-open');
+    modalImage.classList.add('modal-close');
+
+    // Wait for animation to finish
+    setTimeout(() => {
+      modal.style.display = 'none';
+      frame.style.opacity = "1";
+      frame.style.pointerEvents = "auto";
+    }, 250);
   });
 </script>
 

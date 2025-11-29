@@ -1,129 +1,335 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dhyey Lukhi — Shelf & Detective Books</title>
   <style>
-    :root{
+    :root {
       --shelf-width: 80%;
       --max-width: 1000px;
       --book-w: 84px;
       --book-h: 110px;
       --book-gap: 100px;
-      --leather: linear-gradient(180deg,#5a3f2b,#4b2f1e);
+      --leather: linear-gradient(180deg, #5a3f2b, #4b2f1e);
     }
 
-    body{
-      margin:0;
-      padding:40px;
-      min-height:100vh;
+    body {
+      margin: 0;
+      padding: 40px;
+      min-height: 100vh;
       font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background:#f0f0f0;
-      color:#222;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      overflow-x:hidden;
+      background: #f0f0f0;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
     }
 
     /* top photo frame kept */
-    .top-layer{
-      width:var(--shelf-width);
-      max-width:var(--max-width);
-      display:flex;
-      justify-content:flex-start;
-      position:relative;
-      z-index:50;
-      margin-bottom:-40px;
-      --photo-top:-26px;
-      --photo-left:50px;
+    .top-layer {
+      width: var(--shelf-width);
+      max-width: var(--max-width);
+      display: flex;
+      justify-content: flex-start;
+      position: relative;
+      z-index: 50;
+      margin-bottom: -40px;
+      --photo-top: -24px;
+      --photo-left: 50px;
     }
-    .photo-frame{
-      width:140px;height:180px;border:8px solid #6e563a;border-radius:6px;
-      background:url('photo.jpg') center/cover no-repeat;background-color:#d2b48c;
-      box-shadow:0 6px 18px rgba(0,0,0,.35), inset 0 0 12px rgba(0,0,0,.4);
+
+    .photo-frame {
+      width: 140px;
+      height: 180px;
+      border: 8px solid #6e563a;
+      border-radius: 6px;
+      background: url('photo.jpg') center/cover no-repeat;
+      background-color: #d2b48c;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .35), inset 0 0 12px rgba(0, 0, 0, .4);
       transition: opacity .25s ease, transform .3s ease, box-shadow .3s ease;
-      cursor:pointer; position:relative; top:var(--photo-top,0); left:var(--photo-left,0);
+      cursor: pointer;
+      position: relative;
+      top: var(--photo-top, 0);
+      left: var(--photo-left, 0);
+      background-size: cover;
+      background-position: center;
     }
-    .photo-frame:hover{ transform: translateY(-6px) scale(1.03); box-shadow:0 12px 26px rgba(0,0,0,.45); }
+
+    .photo-frame:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, .45);
+    }
 
     /* shelves */
-    .shelf-wrapper{ width:var(--shelf-width); max-width:var(--max-width); display:flex; flex-direction:column; gap:60px; z-index:1; }
-    .shelf{ width:100%; height:80px; position:relative; border-bottom:16px solid #f3f3f3; border-left:20px solid transparent; border-right:20px solid transparent; }
-    .shelf::before{ content:""; position:absolute; top:16px; background:linear-gradient(90deg,#fafafa 0%,#fff 100%); height:26px; width:calc(100% + 40px); box-shadow:0 -1px 6px rgba(0,0,0,.05), 0 4px 16px rgba(0,0,0,.25); z-index:2; }
-    .shelf::after{ content:""; position:absolute; top:42px; width:calc(100% + 40px); height:80px; background:linear-gradient(180deg,#f3f3f3 0%, rgba(255,255,255,0) 100%); clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%); z-index:-1; }
+    .shelf-wrapper {
+      width: var(--shelf-width);
+      max-width: var(--max-width);
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      z-index: 1;
+    }
+
+    .shelf {
+      width: 100%;
+      height: 80px;
+      position: relative;
+      border-bottom: 16px solid #f3f3f3;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+    }
+
+    .shelf::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      background: linear-gradient(90deg, #fafafa 0%, #fff 100%);
+      height: 26px;
+      width: calc(100% + 40px);
+      box-shadow: 0 -1px 6px rgba(0, 0, 0, .05), 0 4px 16px rgba(0, 0, 0, .25);
+      z-index: 2;
+    }
+
+    .shelf::after {
+      content: "";
+      position: absolute;
+      top: 42px;
+      width: calc(100% + 40px);
+      height: 80px;
+      background: linear-gradient(180deg, #f3f3f3 0%, rgba(255, 255, 255, 0) 100%);
+      clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
+      z-index: -1;
+    }
 
     /* books row on shelf 2 */
-    .books-row{
-      position:absolute;
-      left:36px;        /* change to move horizontally */
-      top:-104px;       /* change to move vertically */
-      display:flex;
-      gap:var(--book-gap);
-      align-items:flex-end;
-      z-index:5;
-      pointer-events:none;
+    .books-row {
+      position: absolute;
+      left: 36px;
+      /* change to move horizontally */
+      top: -104px;
+      /* change to move vertically */
+      display: flex;
+      gap: var(--book-gap);
+      align-items: flex-end;
+      z-index: 5;
+      pointer-events: none;
     }
 
-    .book{ width:var(--book-w); height:var(--book-h); position:relative; transform-origin:bottom center; pointer-events:auto; user-select:none; cursor:pointer; }
-
-    .book .cover{
-      width:91%; height:94%; border-radius:6px; box-shadow:0 6px 14px rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center;
-      text-align:center; color:#f6ecd9; font-weight:600; padding:8px; transition: transform .25s ease, box-shadow .25s ease; background:var(--leather); background-size:cover; background-position:center; flex-direction:column;
-      transform-style:preserve-3d;
+    .book {
+      width: var(--book-w);
+      height: var(--book-h);
+      position: relative;
+      transform-origin: bottom center;
+      pointer-events: auto;
+      user-select: none;
+      cursor: pointer;
     }
-    .book:hover .cover{ transform: translateY(-6px) rotate(-1deg) scale(1.02); box-shadow:0 12px 30px rgba(0,0,0,.45); }
 
-    .book .logo{ width:42px; height:42px; border-radius:6px; background:rgba(0,0,0,.12); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 -2px 6px rgba(0,0,0,.2); }
-    .book.linkedin .cover{ background: linear-gradient(180deg,#4e3b2a,#3e2d21); }
-    .book.linkedin .logo{ background: rgba(10,102,194,.95); color:#fff; }
-    .book.github .cover{ background: linear-gradient(180deg,#5e4534,#4a3728); }
-    .book.github .logo{ background: rgba(0,0,0,.95); color:#fff; font-weight:700; }
+    .book .cover {
+      width: 91%;
+      height: 94%;
+      border-radius: 6px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #f6ecd9;
+      font-weight: 600;
+      padding: 8px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      background: var(--leather);
+      background-size: cover;
+      background-position: center;
+      flex-direction: column;
+      transform-style: preserve-3d;
+    }
+
+    .book:hover .cover {
+      transform: translateY(-6px) rotate(-1deg) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .45);
+    }
+
+    .book .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, .12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 -2px 6px rgba(0, 0, 0, .2);
+    }
+
+    .book.linkedin .cover {
+      background: linear-gradient(180deg, #4e3b2a, #3e2d21);
+    }
+
+    .book.linkedin .logo {
+      background: rgba(10, 102, 194, .95);
+      color: #fff;
+    }
+
+    .book.github .cover {
+      background: linear-gradient(180deg, #5e4534, #4a3728);
+    }
+
+    .book.github .logo {
+      background: rgba(0, 0, 0, .95);
+      color: #fff;
+      font-weight: 700;
+    }
 
     /* label centered */
-    .book .label{ position:absolute; bottom:14px; left:50%; transform: translateX(-50%) translateZ(1px); font-size:11px; opacity:.95; color:#f1e8d6; text-shadow:0 1px 0 rgba(0,0,0,.35); pointer-events:none; }
+    .book .label {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(1px);
+      font-size: 11px;
+      opacity: .95;
+      color: #f1e8d6;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, .35);
+      pointer-events: none;
+    }
 
     /* book modal */
-    .book-modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:1200; backdrop-filter: blur(9px); background: rgba(0,0,0,.28); padding:30px; }
-    .book-scene{ width:min(760px,92%); height:min(520px,86%); perspective:1400px; display:flex; align-items:center; justify-content:center; }
-    .book-inner{ width:520px; height:360px; position:relative; transform-style:preserve-3d; transition: transform .6s cubic-bezier(.2,.9,.25,1); }
+    .book-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+      backdrop-filter: blur(9px);
+      background: rgba(0, 0, 0, .28);
+      padding: 30px;
+    }
+
+    .book-scene {
+      width: min(760px, 92%);
+      height: min(520px, 86%);
+      perspective: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book-inner {
+      width: 520px;
+      height: 360px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .6s cubic-bezier(.2, .9, .25, 1);
+    }
 
     /* pages */
-    .book-page{
-      width:100%; height:100%; position:absolute; left:0; top:0; transform-origin:left center;
+    .book-page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: left center;
       /* --tx used to offset pages visually; JS sets it */
-      transform: translateX(var(--tx,0px));
-      background: linear-gradient(#fff,#fbfaf8); box-shadow:0 12px 40px rgba(0,0,0,.45); border-radius:6px; overflow:hidden; padding:22px;
-      display:flex; flex-direction:column; gap:12px; backface-visibility:hidden; transition: transform .6s cubic-bezier(.2,.9,.25,1);
+      transform: translateX(var(--tx, 0px));
+      background: linear-gradient(#fff, #fbfaf8);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+      border-radius: 6px;
+      overflow: hidden;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backface-visibility: hidden;
+      transition: transform .6s cubic-bezier(.2, .9, .25, 1);
       will-change: transform;
     }
-    .book-page.page-back{ background: linear-gradient(180deg,#f4efe9,#efe9e2); }
 
-    .book-page.turn{
-      transform: translateX(var(--tx,0px)) rotateY(-180deg);
+    .book-page.page-back {
+      background: linear-gradient(180deg, #ffffff, #ffffff);
+    }
+
+    .book-page.turn {
+      transform: translateX(var(--tx, 0px)) rotateY(-180deg);
     }
 
     /* content styling: title big */
-    .page-content h1{
-      margin:0; font-size:32px; line-height:1.05; font-weight:700; color:#1f1f1f;
-      word-break:break-word;
+    .page-content h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.05;
+      font-weight: 700;
+      color: #1f1f1f;
+      word-break: break-word;
     }
-    .page-content p{ margin:0; font-size:14px; color:#333; }
-    .page-content a{ color:#0b63b7; text-decoration:none; word-break:break-all; font-size:13px; }
+
+    .page-content p {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .page-content a {
+      color: #0b63b7;
+      text-decoration: none;
+      word-break: break-all;
+      font-size: 13px;
+    }
 
     /* indicator only current page */
-    .book-controls{ position:absolute; right:-18px; bottom:-18px; display:flex; gap:10px; align-items:center; }
-    .page-indicator{ position:absolute; left:-125px; bottom:45px; font-size:13px; color:#4b4b4b; }
+    .book-controls {
+      position: absolute;
+      right: -18px;
+      bottom: -18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
 
-    .close-btn{ position:absolute; top:-6px; right:-6px; background:#fff; width:36px; height:36px; border-radius:999px; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 30px rgba(0,0,0,.35); cursor:pointer; }
-    @media (max-width:720px){
-      .book-inner{ width:92%; height:60vh; }
-      .book-page{ padding:16px; }
-      .book-modal{ padding:12px; }
+    .page-indicator {
+      position: absolute;
+      left: -125px;
+      bottom: 45px;
+      font-size: 13px;
+      color: #4b4b4b;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+      cursor: pointer;
+    }
+
+    @media (max-width:720px) {
+      .book-inner {
+        width: 92%;
+        height: 60vh;
+      }
+
+      .book-page {
+        padding: 16px;
+      }
+
+      .book-modal {
+        padding: 12px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="top-layer">
     <div class="photo-frame"></div>
@@ -166,215 +372,216 @@
     </div>
   </div>
 
-<script>
-/* LINKS: your provided profiles */
-const LINKS = {
-  linkedinProfile: "https://www.linkedin.com/in/dhyeylukhi90",
-  githubProfile: "https://github.com/DhyeyLukhi"
-};
-
-/* DOM refs */
-const linkedinBook = document.getElementById('linkedinBook');
-const githubBook = document.getElementById('githubBook');
-const bookModal = document.getElementById('bookModal');
-const bookInner = document.getElementById('bookInner');
-const closeBook = document.getElementById('closeBook');
-const pageIndicator = document.getElementById('pageIndicator');
-
-let currentPages = [];    // array of {title, url}
-let currentIndex = 0;     // page number visible (0 means first page showing)
-let activeBookType = null;
-
-/* fetch helper with fallback */
-async function fetchJsonWithFallback(path, fallback){
-  try{
-    const res = await fetch(path, {cache: "no-store"});
-    if(!res.ok) throw new Error('no');
-    return await res.json();
-  }catch(e){
-    return fallback;
-  }
-}
-
-/* parse array element which may be "url,title" or just "url" */
-function parseLineItem(item, defaultTitle){
-  if(!item) return {url:null, title: defaultTitle};
-  if(typeof item !== 'string') return {url: item, title: defaultTitle};
-  if(item.includes(',')){
-    const parts = item.split(',');
-    const url = parts[0].trim();
-    const title = parts.slice(1).join(',').trim() || defaultTitle;
-    return { url, title };
-  } else {
-    return { url: item.trim(), title: defaultTitle };
-  }
-}
-
-/* prepare pages for linkedin/github */
-async function preparePages(type){
-  const pages = [];
-  if(type === 'linkedin'){
-    const fallback = {
-      profile: LINKS.linkedinProfile,
-      posts: [
-        "https://www.linkedin.com/feed/update/sample-post-1,Sample Post One",
-        "https://www.linkedin.com/feed/update/sample-post-2,Sample Post Two"
-      ]
+  <script>
+    /* LINKS: your provided profiles */
+    const LINKS = {
+      linkedinProfile: "https://www.linkedin.com/in/dhyeylukhi90",
+      githubProfile: "https://github.com/DhyeyLukhi"
     };
-    const data = await fetchJsonWithFallback('linkedin.json', fallback);
 
-    pages.push({ title: "LinkedIn — Profile", url: data.profile || LINKS.linkedinProfile });
+    /* DOM refs */
+    const linkedinBook = document.getElementById('linkedinBook');
+    const githubBook = document.getElementById('githubBook');
+    const bookModal = document.getElementById('bookModal');
+    const bookInner = document.getElementById('bookInner');
+    const closeBook = document.getElementById('closeBook');
+    const pageIndicator = document.getElementById('pageIndicator');
 
-    const arr = Array.isArray(data.posts) ? data.posts : [];
-    if(arr.length === 0){
-      pages.push({ title: "No posts", url: null });
-    } else {
-      arr.forEach((p, i) => {
-        const parsed = parseLineItem(p, `Post ${i+1}`);
-        pages.push({ title: parsed.title, url: parsed.url });
-      });
+    let currentPages = [];    // array of {title, url}
+    let currentIndex = 0;     // page number visible (0 means first page showing)
+    let activeBookType = null;
+
+    /* fetch helper with fallback */
+    async function fetchJsonWithFallback(path, fallback) {
+      try {
+        const res = await fetch(path, { cache: "no-store" });
+        if (!res.ok) throw new Error('no');
+        return await res.json();
+      } catch (e) {
+        return fallback;
+      }
     }
-  } else if(type === 'github'){
-    const fallback = {
-      profile: LINKS.githubProfile,
-      repos: [
-        "https://github.com/DhyeyLukhi/sample-repo-1,Sample Repo One",
-        "https://github.com/DhyeyLukhi/sample-repo-2,Sample Repo Two"
-      ]
-    };
-    const data = await fetchJsonWithFallback('github.json', fallback);
 
-    pages.push({ title: "GitHub — Profile", url: data.profile || LINKS.githubProfile });
-
-    const arr = Array.isArray(data.repos) ? data.repos : [];
-    if(arr.length === 0){
-      pages.push({ title: "No repos", url: null });
-    } else {
-      arr.forEach((r, i) => {
-        const parsed = parseLineItem(r, `Repository ${i+1}`);
-        pages.push({ title: parsed.title, url: parsed.url });
-      });
+    /* parse array element which may be "url,title" or just "url" */
+    function parseLineItem(item, defaultTitle) {
+      if (!item) return { url: null, title: defaultTitle };
+      if (typeof item !== 'string') return { url: item, title: defaultTitle };
+      if (item.includes(',')) {
+        const parts = item.split(',');
+        const url = parts[0].trim();
+        const title = parts.slice(1).join(',').trim() || defaultTitle;
+        return { url, title };
+      } else {
+        return { url: item.trim(), title: defaultTitle };
+      }
     }
-  }
-  return pages;
-}
 
-/* build DOM pages and set dynamic stacking + offset */
-function buildPagesDom(pages){
-  bookInner.innerHTML = '';
-  const total = pages.length;
-  for(let i=0;i<total;i++){
-    const pg = pages[i];
-    const el = document.createElement('div');
-    el.className = 'book-page' + (i % 2 ? ' page-back' : '');
-    el.dataset.page = i;
-    // zIndex: first page should be on top (highest z) so subtract i
-    el.style.zIndex = (total - i) + 100;
-    // set x-offset visually (small offset per page)
-    const offset = i * 8; // adjust as you like
-    el.style.setProperty('--tx', `${offset}px`);
+    /* prepare pages for linkedin/github */
+    async function preparePages(type) {
+      const pages = [];
+      if (type === 'linkedin') {
+        const fallback = {
+          profile: LINKS.linkedinProfile,
+          posts: [
+            "https://www.linkedin.com/feed/update/sample-post-1,Sample Post One",
+            "https://www.linkedin.com/feed/update/sample-post-2,Sample Post Two"
+          ]
+        };
+        const data = await fetchJsonWithFallback('linkedin.json', fallback);
 
-    el.innerHTML = `
+        pages.push({ title: "LinkedIn — Profile", url: data.profile || LINKS.linkedinProfile });
+
+        const arr = Array.isArray(data.posts) ? data.posts : [];
+        if (arr.length === 0) {
+          pages.push({ title: "No posts", url: null });
+        } else {
+          arr.forEach((p, i) => {
+            const parsed = parseLineItem(p, `Post ${i + 1}`);
+            pages.push({ title: parsed.title, url: parsed.url });
+          });
+        }
+      } else if (type === 'github') {
+        const fallback = {
+          profile: LINKS.githubProfile,
+          repos: [
+            "https://github.com/DhyeyLukhi/sample-repo-1,Sample Repo One",
+            "https://github.com/DhyeyLukhi/sample-repo-2,Sample Repo Two"
+          ]
+        };
+        const data = await fetchJsonWithFallback('github.json', fallback);
+
+        pages.push({ title: "GitHub — Profile", url: data.profile || LINKS.githubProfile });
+
+        const arr = Array.isArray(data.repos) ? data.repos : [];
+        if (arr.length === 0) {
+          pages.push({ title: "No repos", url: null });
+        } else {
+          arr.forEach((r, i) => {
+            const parsed = parseLineItem(r, `Repository ${i + 1}`);
+            pages.push({ title: parsed.title, url: parsed.url });
+          });
+        }
+      }
+      return pages;
+    }
+
+    /* build DOM pages and set dynamic stacking + offset */
+    function buildPagesDom(pages) {
+      bookInner.innerHTML = '';
+      const total = pages.length;
+      for (let i = 0; i < total; i++) {
+        const pg = pages[i];
+        const el = document.createElement('div');
+        el.className = 'book-page' + (i % 2 ? ' page-back' : '');
+        el.dataset.page = i;
+        // zIndex: first page should be on top (highest z) so subtract i
+        el.style.zIndex = (total - i) + 100;
+        // set x-offset visually (small offset per page)
+        const offset = i * 8; // adjust as you like
+        el.style.setProperty('--tx', `${offset}px`);
+
+        el.innerHTML = `
       <div class="page-content">
         <h1>${escapeHtml(pg.title)}</h1>
         ${pg.url ? `<p><a href="${escapeAttr(pg.url)}" target="_blank" rel="noopener noreferrer">Open link</a></p>` : `<p>${escapeHtml(pg.url === null ? '—' : '')}</p>`}
       </div>
     `;
-    bookInner.appendChild(el);
-  }
-}
-
-/* escape helpers */
-function escapeHtml(s){ if(!s) return ''; return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
-function escapeAttr(s){ if(!s) return ''; return String(s).replaceAll('"','&quot;'); }
-
-/* open book */
-async function openBook(type){
-  activeBookType = type;
-  currentIndex = 0;
-  currentPages = await preparePages(type);
-  buildPagesDom(currentPages);
-
-  updatePagesVisual();
-  updateIndicator();
-
-  bookModal.style.display = 'flex';
-  bookModal.setAttribute('aria-hidden','false');
-
-  // small entrance animation
-  bookInner.style.transform = 'translateY(6px) scale(.98)';
-  setTimeout(()=> bookInner.style.transform = 'translateY(0) scale(1)', 10);
-}
-
-/* close */
-function closeViewer(){
-  bookModal.style.display = 'none';
-  bookModal.setAttribute('aria-hidden','true');
-  activeBookType = null;
-  currentPages = [];
-  currentIndex = 0;
-  bookInner.innerHTML = '';
-}
-
-/* update which pages are turned; pages keep their own dataset.page which is real page number */
-function updatePagesVisual(){
-  // Every book-page will check its dataset.page vs currentIndex
-  const pages = Array.from(bookInner.querySelectorAll('.book-page'));
-  pages.forEach(p => {
-    const n = Number(p.dataset.page);
-    if(n < currentIndex){
-      p.classList.add('turn');
-    } else {
-      p.classList.remove('turn');
+        bookInner.appendChild(el);
+      }
     }
-  });
-}
 
-/* indicator */
-function updateIndicator(){
-  pageIndicator.textContent = `${currentIndex + 1}`;
-}
+    /* escape helpers */
+    function escapeHtml(s) { if (!s) return ''; return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); }
+    function escapeAttr(s) { if (!s) return ''; return String(s).replaceAll('"', '&quot;'); }
 
-/* navigation */
-function nextPage(){
-  if(currentIndex < currentPages.length - 1){
-    currentIndex++;
-    updatePagesVisual();
-    updateIndicator();
-  }
-}
-function prevPage(){
-  if(currentIndex > 0){
-    currentIndex--;
-    updatePagesVisual();
-    updateIndicator();
-  }
-}
+    /* open book */
+    async function openBook(type) {
+      activeBookType = type;
+      currentIndex = 0;
+      currentPages = await preparePages(type);
+      buildPagesDom(currentPages);
 
-/* event wiring */
-linkedinBook.addEventListener('click', ()=> openBook('linkedin'));
-githubBook.addEventListener('click', ()=> openBook('github'));
-closeBook.addEventListener('click', closeViewer);
-bookModal.addEventListener('click', (e)=> { if(e.target === bookModal) closeViewer(); });
+      updatePagesVisual();
+      updateIndicator();
 
-/* keyboard nav (arrow keys still work) */
-document.addEventListener('keydown', (e)=>{
-  if(bookModal.style.display === 'flex'){
-    if(e.key === 'ArrowRight') nextPage();
-    if(e.key === 'ArrowLeft') prevPage();
-    if(e.key === 'Escape') closeViewer();
-  }
-});
+      bookModal.style.display = 'flex';
+      bookModal.setAttribute('aria-hidden', 'false');
 
-/* place books on shelf (small helper, you can change CSS left/top to reposition) */
-function placeBooksOnShelf(){
-  const shelf2 = document.getElementById('shelf2');
-  const booksRow = document.getElementById('booksRow');
-  const leftOffset = 36;
-  booksRow.style.left = `${leftOffset}px`;
-}
-window.addEventListener('load', placeBooksOnShelf);
-window.addEventListener('resize', placeBooksOnShelf);
-</script>
+      // small entrance animation
+      bookInner.style.transform = 'translateY(6px) scale(.98)';
+      setTimeout(() => bookInner.style.transform = 'translateY(0) scale(1)', 10);
+    }
+
+    /* close */
+    function closeViewer() {
+      bookModal.style.display = 'none';
+      bookModal.setAttribute('aria-hidden', 'true');
+      activeBookType = null;
+      currentPages = [];
+      currentIndex = 0;
+      bookInner.innerHTML = '';
+    }
+
+    /* update which pages are turned; pages keep their own dataset.page which is real page number */
+    function updatePagesVisual() {
+      // Every book-page will check its dataset.page vs currentIndex
+      const pages = Array.from(bookInner.querySelectorAll('.book-page'));
+      pages.forEach(p => {
+        const n = Number(p.dataset.page);
+        if (n < currentIndex) {
+          p.classList.add('turn');
+        } else {
+          p.classList.remove('turn');
+        }
+      });
+    }
+
+    /* indicator */
+    function updateIndicator() {
+      pageIndicator.textContent = `${currentIndex + 1}`;
+    }
+
+    /* navigation */
+    function nextPage() {
+      if (currentIndex < currentPages.length - 1) {
+        currentIndex++;
+        updatePagesVisual();
+        updateIndicator();
+      }
+    }
+    function prevPage() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updatePagesVisual();
+        updateIndicator();
+      }
+    }
+
+    /* event wiring */
+    linkedinBook.addEventListener('click', () => openBook('linkedin'));
+    githubBook.addEventListener('click', () => openBook('github'));
+    closeBook.addEventListener('click', closeViewer);
+    bookModal.addEventListener('click', (e) => { if (e.target === bookModal) closeViewer(); });
+
+    /* keyboard nav (arrow keys still work) */
+    document.addEventListener('keydown', (e) => {
+      if (bookModal.style.display === 'flex') {
+        if (e.key === 'ArrowRight') nextPage();
+        if (e.key === 'ArrowLeft') prevPage();
+        if (e.key === 'Escape') closeViewer();
+      }
+    });
+
+    /* place books on shelf (small helper, you can change CSS left/top to reposition) */
+    function placeBooksOnShelf() {
+      const shelf2 = document.getElementById('shelf2');
+      const booksRow = document.getElementById('booksRow');
+      const leftOffset = 36;
+      booksRow.style.left = `${leftOffset}px`;
+    }
+    window.addEventListener('load', placeBooksOnShelf);
+    window.addEventListener('resize', placeBooksOnShelf);
+  </script>
 </body>
+
 </html>

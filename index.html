@@ -58,9 +58,16 @@
       background-position: center;
     }
 
+
     .photo-frame:hover {
       transform: translateY(-6px) scale(1.03);
       box-shadow: 0 12px 26px rgba(0, 0, 0, .45);
+    }
+
+    /* Utility for hiding original objects */
+    .hidden {
+      opacity: 0 !important;
+      pointer-events: none !important;
     }
 
     /* shelves */
@@ -327,6 +334,73 @@
         padding: 12px;
       }
     }
+
+    /* Photo Modal */
+    .photo-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .photo-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .photo-modal-content {
+      position: relative;
+      width: auto;
+      height: auto;
+      max-width: 90vw;
+      max-height: 90vh;
+      border: 12px solid #acb2e9;
+      border-radius: 8px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background: #d2b48c;
+    }
+
+    .photo-modal.active .photo-modal-content {
+      transform: scale(1);
+    }
+
+    .photo-modal img {
+      display: block;
+      max-width: 100%;
+      max-height: 80vh;
+      border-radius: 2px;
+    }
+
+    .photo-modal-close {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+      font-size: 20px;
+      color: #333;
+      transition: transform 0.2s;
+    }
+
+    .photo-modal-close:hover {
+      transform: scale(1.1);
+    }
   </style>
 </head>
 
@@ -369,6 +443,14 @@
       </div>
 
       <div class="close-btn" id="closeBook" title="Close">✕</div>
+    </div>
+  </div>
+
+  <!-- Photo Modal -->
+  <div class="photo-modal" id="photoModal">
+    <div class="photo-modal-content">
+      <div class="photo-modal-close" id="closePhotoModal">✕</div>
+      <img src="photo.jpg" alt="Profile Photo Large">
     </div>
   </div>
 
@@ -504,6 +586,10 @@
       updatePagesVisual();
       updateIndicator();
 
+      // Hide the specific book on shelf
+      if (type === 'linkedin') linkedinBook.classList.add('hidden');
+      if (type === 'github') githubBook.classList.add('hidden');
+
       bookModal.style.display = 'flex';
       bookModal.setAttribute('aria-hidden', 'false');
 
@@ -516,6 +602,11 @@
     function closeViewer() {
       bookModal.style.display = 'none';
       bookModal.setAttribute('aria-hidden', 'true');
+      
+      // Show the book again
+      if (activeBookType === 'linkedin') linkedinBook.classList.remove('hidden');
+      if (activeBookType === 'github') githubBook.classList.remove('hidden');
+
       activeBookType = null;
       currentPages = [];
       currentIndex = 0;
@@ -581,6 +672,40 @@
     }
     window.addEventListener('load', placeBooksOnShelf);
     window.addEventListener('resize', placeBooksOnShelf);
+
+    /* Photo Modal Logic */
+    const photoFrame = document.querySelector('.photo-frame');
+    const photoModal = document.getElementById('photoModal');
+    const closePhotoModal = document.getElementById('closePhotoModal');
+
+    function openPhotoModal() {
+      photoModal.style.display = 'flex';
+      // Force reflow
+      photoModal.offsetHeight;
+      photoModal.classList.add('active');
+      photoFrame.classList.add('hidden');
+    }
+
+    function closePhotoModalFunc() {
+      photoModal.classList.remove('active');
+      photoFrame.classList.remove('hidden');
+      setTimeout(() => {
+        photoModal.style.display = 'none';
+      }, 300);
+    }
+
+    photoFrame.addEventListener('click', openPhotoModal);
+    closePhotoModal.addEventListener('click', closePhotoModalFunc);
+    photoModal.addEventListener('click', (e) => {
+      if (e.target === photoModal) closePhotoModalFunc();
+    });
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && photoModal.classList.contains('active')) {
+        closePhotoModalFunc();
+      }
+    });
   </script>
 </body>
 

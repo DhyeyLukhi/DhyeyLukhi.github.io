@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dhyey Lukhi — Shelf & Detective Books</title>
+  <style>
+    :root {
+      --shelf-width: 80%;
+      --max-width: 1000px;
+      --book-w: 84px;
+      --book-h: 110px;
+      --book-gap: 100px;
+      --leather: linear-gradient(180deg, #5a3f2b, #4b2f1e);
+    }
+
+    body {
+      margin: 0;
+      padding: 40px;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #f0f0f0;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    /* top photo frame kept */
+    .top-layer {
+      width: var(--shelf-width);
+      max-width: var(--max-width);
+      display: flex;
+      justify-content: flex-start;
+      position: relative;
+      z-index: 50;
+      margin-bottom: -40px;
+      height: 200px; /* <-- FIX: Prevent shelves from moving upward */
+      --photo-top: -24px;
+      --photo-left: 50px;
+    }
+
+    .photo-frame {
+      width: 140px;
+      height: 180px;
+      border: 8px solid #acb2e9;
+      border-radius: 6px;
+      background: url('photo.jpg') center/cover no-repeat;
+      background-color: #d2b48c;
+      box-shadow: 0 0px 18px rgba(0, 0, 0, .35), inset 0 0 12px rgba(0, 0, 0, .4);
+      transition: opacity .25s ease, transform .3s ease, box-shadow .3s ease;
+      cursor: pointer;
+      position: relative;
+      top: var(--photo-top, 0);
+      left: var(--photo-left, 0);
+      background-size: cover;
+      background-position: center;
+      z-index: 100;
+    }
+
+    .photo-frame:hover {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, .45);
+    }
+
+    .photo-frame.active {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      width: 70vmin;
+      height: 90vmin;
+      border-width: 12px;
+      border-radius: 10px;
+      box-shadow: 0 22px 40px rgba(0, 0, 0, .55);
+      z-index: 5000;
+      background-size: cover;
+      background-position: center;
+      transition: transform .35s ease, box-shadow .35s ease;
+    }
+
+    .photo-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .28);
+      backdrop-filter: blur(12px);
+      z-index: 4000;
+      display: none;
+    }
+
+    .photo-backdrop.show {
+      display: block;
+    }
+
+    /* shelves */
+    .shelf-wrapper {
+      width: var(--shelf-width);
+      max-width: var(--max-width);
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+      z-index: 1;
+    }
+
+    .shelf {
+      width: 100%;
+      height: 80px;
+      position: relative;
+      border-bottom: 16px solid #f3f3f3;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+    }
+
+    .shelf::before {
+      content: "";
+      position: absolute;
+      top: 16px;
+      background: linear-gradient(90deg, #fafafa 0%, #fff 100%);
+      height: 26px;
+      width: calc(100% + 40px);
+      box-shadow: 0 -1px 6px rgba(0, 0, 0, .05), 0 4px 16px rgba(0, 0, 0, .25);
+      z-index: 2;
+    }
+
+    .shelf::after {
+      content: "";
+      position: absolute;
+      top: 42px;
+      width: calc(100% + 40px);
+      height: 80px;
+      background: linear-gradient(180deg, #f3f3f3 0%, rgba(255, 255, 255, 0) 100%);
+      clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 3% 100%);
+      z-index: -1;
+    }
+
+    .books-row {
+      position: absolute;
+      left: 36px;
+      top: -104px;
+      display: flex;
+      gap: var(--book-gap);
+      align-items: flex-end;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .book {
+      width: var(--book-w);
+      height: var(--book-h);
+      position: relative;
+      transform-origin: bottom center;
+      pointer-events: auto;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .book .cover {
+      width: 91%;
+      height: 94%;
+      border-radius: 6px;
+      box-shadow: 0 0px 14px rgba(0, 0, 0, .35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #f6ecd9;
+      font-weight: 600;
+      padding: 8px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      background: var(--leather);
+      background-size: cover;
+      background-position: center;
+      flex-direction: column;
+      transform-style: preserve-3d;
+    }
+
+    .book:hover .cover {
+      transform: translateY(-6px) rotate(-1deg) scale(1.02);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .45);
+    }
+
+    .book .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, .12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 -2px 6px rgba(0, 0, 0, .2);
+    }
+
+    .book.linkedin .cover {
+      background: linear-gradient(180deg, #4e3b2a, #3e2d21);
+    }
+
+    .book.linkedin .logo {
+      background: rgba(10, 102, 194, .95);
+      color: #fff;
+    }
+
+    .book.github .cover {
+      background: linear-gradient(180deg, #5e4534, #4a3728);
+    }
+
+    .book.github .logo {
+      background: rgba(0, 0, 0, .95);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .book .label {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(1px);
+      font-size: 11px;
+      opacity: .95;
+      color: #f1e8d6;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, .35);
+      pointer-events: none;
+    }
+
+    .book-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+      backdrop-filter: blur(9px);
+      background: rgba(0, 0, 0, .28);
+      padding: 30px;
+    }
+
+    .book-scene {
+      width: min(760px, 92%);
+      height: min(520px, 86%);
+      perspective: 1400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .book-inner {
+      width: 520px;
+      height: 360px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .6s cubic-bezier(.2, .9, .25, 1);
+    }
+
+    .book-page {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform-origin: left center;
+      background: linear-gradient(#fff, #fbfaf8);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+      border-radius: 6px;
+      overflow: hidden;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backface-visibility: hidden;
+      transition: transform .6s cubic-bezier(.2, .9, .25, 1);
+    }
+
+    .book-page.page-back {
+      background: linear-gradient(180deg, #ffffff, #ffffff);
+    }
+
+    .book-page.turn {
+      transform: rotateY(-180deg);
+    }
+
+    .page-content h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.05;
+      font-weight: 700;
+      color: #1f1f1f;
+      word-break: break-word;
+    }
+
+    .page-content p {
+      margin: 0;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .page-content a {
+      color: #0b63b7;
+      text-decoration: none;
+      word-break: break-all;
+      font-size: 13px;
+    }
+
+    .book-controls {
+      position: absolute;
+      right: -18px;
+      bottom: -18px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .page-indicator {
+      position: absolute;
+      left: -125px;
+      bottom: 45px;
+      font-size: 13px;
+      color: #4b4b4b;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-layer">
+    <div class="photo-frame"></div>
+  </div>
+
+  <div class="photo-backdrop" id="photoBackdrop"></div>
+
+  <div class="shelf-wrapper">
+
+    <div class="shelf" id="shelf1"></div>
+
+    <div class="shelf" id="shelf2">
+      <div class="books-row">
+        <div class="book linkedin" id="linkedinBook">
+          <div class="cover">
+            <div class="logo"><img src="linkedin.png" width="28" height="28"></div>
+            <div class="label">LinkedIn</div>
+          </div>
+        </div>
+
+        <div class="book github" id="githubBook">
+          <div class="cover">
+            <div class="logo"><img src="github.png" width="28" height="28"></div>
+            <div class="label">GitHub</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf" id="shelf3"></div>
+    <div class="shelf" id="shelf4"></div>
+  </div>
+
+  <div class="book-modal" id="bookModal">
+    <div class="book-scene">
+      <div class="book-inner" id="bookInner"></div>
+      <div class="page-indicator" id="pageIndicator">1</div>
+      <div class="close-btn" id="closeBook">✕</div>
+    </div>
+  </div>
+
+  <script>
+
+    const LINKS = {
+      linkedinProfile: "https://www.linkedin.com/in/dhyeylukhi90",
+      githubProfile: "https://github.com/DhyeyLukhi"
+    };
+
+    const linkedinBook = document.getElementById("linkedinBook");
+    const githubBook = document.getElementById("githubBook");
+    const bookModal = document.getElementById("bookModal");
+    const bookInner = document.getElementById("bookInner");
+    const closeBook = document.getElementById("closeBook");
+    const pageIndicator = document.getElementById("pageIndicator");
+
+    let currentPages = [];
+    let currentIndex = 0;
+
+    async function fetchJsonWithFallback(path, fallback) {
+      try {
+        const r = await fetch(path, { cache: "no-store" });
+        if (!r.ok) throw 0;
+        return await r.json();
+      } catch {
+        return fallback;
+      }
+    }
+
+    function parseLineItem(item, defTitle) {
+      if (!item) return { url: null, title: defTitle };
+      if (typeof item !== "string") return { url: item, title: defTitle };
+      if (item.includes(",")) {
+        const parts = item.split(",");
+        return {
+          url: parts[0].trim(),
+          title: parts.slice(1).join(",").trim() || defTitle
+        };
+      }
+      return { url: item.trim(), title: defTitle };
+    }
+
+    async function preparePages(type) {
+      const pages = [];
+
+      if (type === "linkedin") {
+        const fallback = {
+          profile: LINKS.linkedinProfile,
+          posts: []
+        };
+        const data = await fetchJsonWithFallback("linkedin.json", fallback);
+
+        pages.push({ title: "LinkedIn — Profile", url: data.profile });
+
+        (data.posts || []).forEach((p, i) => {
+          const parsed = parseLineItem(p, "Post " + (i + 1));
+          pages.push({ title: parsed.title, url: parsed.url });
+        });
+      }
+
+      if (type === "github") {
+        const fallback = {
+          profile: LINKS.githubProfile,
+          repos: []
+        };
+        const data = await fetchJsonWithFallback("github.json", fallback);
+
+        pages.push({ title: "GitHub — Profile", url: data.profile });
+
+        (data.repos || []).forEach((p, i) => {
+          const parsed = parseLineItem(p, "Repo " + (i + 1));
+          pages.push({ title: parsed.title, url: parsed.url });
+        });
+      }
+
+      return pages;
+    }
+
+    function buildPagesDom(pages) {
+      bookInner.innerHTML = "";
+
+      pages.forEach((pg, i) => {
+        const el = document.createElement("div");
+        el.className = "book-page";
+        el.dataset.page = i;
+        el.style.zIndex = pages.length - i + 100;
+
+        el.innerHTML = `
+          <div class="page-content">
+            <h1>${pg.title}</h1>
+            ${pg.url ? `<p><a href="${pg.url}" target="_blank">Open link</a></p>` : `<p>—</p>`}
+          </div>
+        `;
+
+        bookInner.appendChild(el);
+      });
+    }
+
+    function updatePagesVisual() {
+      const pages = document.querySelectorAll(".book-page");
+      pages.forEach(p => {
+        const n = Number(p.dataset.page);
+        if (n < currentIndex) p.classList.add("turn");
+        else p.classList.remove("turn");
+      });
+    }
+
+    function updateIndicator() {
+      pageIndicator.textContent = currentIndex + 1;
+    }
+
+    async function openBook(type) {
+      currentIndex = 0;
+      currentPages = await preparePages(type);
+      buildPagesDom(currentPages);
+      updatePagesVisual();
+      updateIndicator();
+      bookModal.style.display = "flex";
+
+      bookInner.style.transform = "translateY(6px) scale(.98)";
+      setTimeout(() => bookInner.style.transform = "translateY(0) scale(1)", 10);
+    }
+
+    function closeViewer() {
+      bookModal.style.display = "none";
+    }
+
+    linkedinBook.addEventListener("click", () => openBook("linkedin"));
+    githubBook.addEventListener("click", () => openBook("github"));
+    closeBook.addEventListener("click", closeViewer);
+    bookModal.addEventListener("click", e => { if (e.target === bookModal) closeViewer(); });
+
+    document.addEventListener("keydown", e => {
+      if (bookModal.style.display === "flex") {
+        if (e.key === "ArrowRight") {
+          if (currentIndex < currentPages.length - 1) currentIndex++;
+        }
+        if (e.key === "ArrowLeft") {
+          if (currentIndex > 0) currentIndex--;
+        }
+        if (e.key === "Escape") closeViewer();
+
+        updatePagesVisual();
+        updateIndicator();
+      }
+    });
+
+    /* PHOTO FRAME FULLSCREEN */
+    const frame = document.querySelector(".photo-frame");
+    const backdrop = document.getElementById("photoBackdrop");
+
+    frame.addEventListener("click", () => {
+      const opening = frame.classList.toggle("active");
+      if (opening) backdrop.classList.add("show");
+      else backdrop.classList.remove("show");
+    });
+
+    backdrop.addEventListener("click", () => {
+      frame.classList.remove("active");
+      backdrop.classList.remove("show");
+    });
+
+  </script>
+</body>
+
+</html>
+p

@@ -82,17 +82,20 @@
 
     .shelf {
       width: 100%;
-      height: 80px;
+      height: 96px;
       position: relative;
       border-bottom: 16px solid #f3f3f3;
       border-left: 20px solid transparent;
       border-right: 20px solid transparent;
+      box-sizing: border-box;
     }
 
     .shelf::before {
       content: "";
       position: absolute;
       top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
       background: linear-gradient(90deg, #fafafa 0%, #fff 100%);
       height: 26px;
       width: calc(100% + 40px);
@@ -104,6 +107,8 @@
       content: "";
       position: absolute;
       top: 42px;
+      left: 50%;
+      transform: translateX(-50%);
       width: calc(100% + 40px);
       height: 80px;
       background: linear-gradient(180deg, #f3f3f3 0%, rgba(255, 255, 255, 0) 100%);
@@ -123,6 +128,20 @@
       align-items: flex-end;
       z-index: 5;
       pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --shelf-width: 95%;
+        --book-gap: 40px;
+      }
+
+      .books-row {
+        left: 50%;
+        transform: translateX(-50%);
+        justify-content: center;
+        width: 100%;
+      }
     }
 
     .book {
@@ -298,9 +317,6 @@
     }
 
     .page-indicator {
-      position: absolute;
-      left: -125px;
-      bottom: 45px;
       font-size: 13px;
       color: #4b4b4b;
     }
@@ -320,10 +336,16 @@
       cursor: pointer;
     }
 
-    @media (max-width:720px) {
+    @media (orientation: portrait) {
+      .book-scene {
+        height: min(600px, 86%);
+      }
+      
       .book-inner {
-        width: 92%;
-        height: 60vh;
+        width: 360px;
+        height: 520px;
+        max-width: 90vw;
+        max-height: 65vh;
       }
 
       .book-page {
@@ -432,6 +454,10 @@
 
     <div class="shelf" id="shelf3"></div>
     <div class="shelf" id="shelf4"></div>
+    <div class="shelf" id="shelf5"></div>
+    <div class="shelf" id="shelf6"></div>
+    <div class="shelf" id="shelf7"></div>
+    <div class="shelf" id="shelf8"></div>
   </div>
 
   <div class="book-modal" id="bookModal" aria-hidden="true">
@@ -559,7 +585,7 @@
         // zIndex: first page should be on top (highest z) so subtract i
         el.style.zIndex = (total - i) + 100;
         // set x-offset visually (small offset per page)
-        const offset = i * 8; // adjust as you like
+        const offset = 0; // adjust as you like
         el.style.setProperty('--tx', `${offset}px`);
 
         el.innerHTML = `
@@ -664,14 +690,7 @@
     });
 
     /* place books on shelf (small helper, you can change CSS left/top to reposition) */
-    function placeBooksOnShelf() {
-      const shelf2 = document.getElementById('shelf2');
-      const booksRow = document.getElementById('booksRow');
-      const leftOffset = 36;
-      booksRow.style.left = `${leftOffset}px`;
-    }
-    window.addEventListener('load', placeBooksOnShelf);
-    window.addEventListener('resize', placeBooksOnShelf);
+    /* JS positioning removed in favor of CSS for responsiveness */
 
     /* Photo Modal Logic */
     const photoFrame = document.querySelector('.photo-frame');

@@ -10,7 +10,6 @@ const githubBook = document.getElementById('githubBook');
 const bookModal = document.getElementById('bookModal');
 const bookInner = document.getElementById('bookInner');
 const closeBook = document.getElementById('closeBook');
-const pageIndicator = document.getElementById('pageIndicator');
 
 let currentPages = [];    // array of {title, url}
 let currentIndex = 0;     // page number visible (0 means first page showing)
@@ -127,7 +126,6 @@ async function openBook(type) {
     buildPagesDom(currentPages);
 
     updatePagesVisual();
-    updateIndicator();
 
     // Hide the specific book on shelf
     if (type === 'linkedin') linkedinBook.classList.add('hidden');
@@ -139,6 +137,8 @@ async function openBook(type) {
     // small entrance animation
     bookInner.style.transform = 'translateY(6px) scale(.98)';
     setTimeout(() => bookInner.style.transform = 'translateY(0) scale(1)', 10);
+
+    document.body.classList.add('no-scroll');
 }
 
 /* close */
@@ -154,6 +154,8 @@ function closeViewer() {
     currentPages = [];
     currentIndex = 0;
     bookInner.innerHTML = '';
+
+    document.body.classList.remove('no-scroll');
 }
 
 /* update which pages are turned; pages keep their own dataset.page which is real page number */
@@ -170,24 +172,19 @@ function updatePagesVisual() {
     });
 }
 
-/* indicator */
-function updateIndicator() {
-    pageIndicator.textContent = `${currentIndex + 1}`;
-}
+
 
 /* navigation */
 function nextPage() {
     if (currentIndex < currentPages.length - 1) {
         currentIndex++;
         updatePagesVisual();
-        updateIndicator();
     }
 }
 function prevPage() {
     if (currentIndex > 0) {
         currentIndex--;
         updatePagesVisual();
-        updateIndicator();
     }
 }
 
@@ -220,6 +217,7 @@ function openPhotoModal() {
     photoModal.offsetHeight;
     photoModal.classList.add('active');
     photoFrame.classList.add('hidden');
+    document.body.classList.add('no-scroll');
 }
 
 function closePhotoModalFunc() {
@@ -227,6 +225,7 @@ function closePhotoModalFunc() {
     photoFrame.classList.remove('hidden');
     setTimeout(() => {
         photoModal.style.display = 'none';
+        document.body.classList.remove('no-scroll');
     }, 300);
 }
 
@@ -241,4 +240,24 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && photoModal.classList.contains('active')) {
         closePhotoModalFunc();
     }
+});
+
+/* Mobile tap navigation inside the book area */
+bookInner.addEventListener('click', function (e) {
+    // get position of tap relative to bookInner
+    const rect = bookInner.getBoundingClientRect();
+    const x = e.clientX - rect.left;   // tap X inside element
+    const width = rect.width;
+
+    const leftZone = width * 0.20;
+    const rightZone = width * 0.80;
+
+    if (x < leftZone) {
+        // left side tap
+        prevPage();
+    } else if (x > rightZone) {
+        // right side tap
+        nextPage();
+    }
+    // middle 60% does nothing
 });

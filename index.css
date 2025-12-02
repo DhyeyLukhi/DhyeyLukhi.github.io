@@ -62,6 +62,10 @@
         pointer-events: none !important;
     }
 
+    .no-scroll {
+        overflow: hidden !important;
+    }
+
     /* shelves */
     .shelf-wrapper {
         width: var(--shelf-width);
@@ -80,6 +84,14 @@
         border-left: 20px solid transparent;
         border-right: 20px solid transparent;
         box-sizing: border-box;
+    }
+
+    /* Hide extra shelves by default (Landscape) */
+    #shelf5,
+    #shelf6,
+    #shelf7,
+    #shelf8 {
+        display: none;
     }
 
     .shelf::before {
@@ -273,6 +285,7 @@
 
     .book-page.turn {
         transform: translateX(var(--tx, 0px)) rotateY(-180deg);
+        transition: transform 1s cubic-bezier(.2, .9, .25, 1);
     }
 
     /* content styling: title big */
@@ -298,25 +311,12 @@
         font-size: 13px;
     }
 
-    /* indicator only current page */
-    .book-controls {
-        position: absolute;
-        right: -18px;
-        bottom: -18px;
-        display: flex;
-        gap: 10px;
-        align-items: center;
-    }
-
-    .page-indicator {
-        font-size: 13px;
-        color: #4b4b4b;
-    }
+    /* indicator removed */
 
     .close-btn {
         position: absolute;
-        top: -6px;
-        right: -6px;
+        top: -18px;
+        right: -18px;
         background: #fff;
         width: 36px;
         height: 36px;
@@ -326,6 +326,10 @@
         justify-content: center;
         box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
         cursor: pointer;
+        z-index: 1000;
+        /* Ensure it's above pages */
+        transform: translateZ(20px);
+        /* Lift it up in 3D space */
     }
 
     @media (orientation: portrait) {
@@ -335,14 +339,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            /* Ensure full height for centering */
-            position: fixed;
-            /* Fix to screen */
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            /* Let clicks pass through if needed, but modal usually blocks */
             padding: 0 20px;
             /* Enforce side margins via container padding */
             box-sizing: border-box;
@@ -352,13 +348,10 @@
         /* Re-enable pointer events for the book itself */
         .book-inner {
             pointer-events: auto;
-            width: 100%;
-            /* Fill the container (which has padding) */
+            width: min(100%, 49vh);
             height: auto;
-            min-height: 60vh;
-            /* Ensure it looks like a tall book */
-            max-height: 85vh;
-            max-width: none;
+            aspect-ratio: 0.7;
+            max-width: 100%;
         }
 
         .book-page {
@@ -369,6 +362,14 @@
             padding: 0;
             align-items: center;
             /* Ensure flex centering works */
+        }
+
+        /* Show extra shelves in Portrait */
+        #shelf5,
+        #shelf6,
+        #shelf7,
+        #shelf8 {
+            display: block;
         }
     }
 

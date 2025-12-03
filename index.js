@@ -244,6 +244,11 @@ document.addEventListener('keydown', (e) => {
 
 /* Mobile tap navigation inside the book area */
 bookInner.addEventListener('click', function (e) {
+    // Check if the clicked element is a link or inside a link
+    if (e.target.closest('a')) {
+        return;
+    }
+
     // get position of tap relative to bookInner
     const rect = bookInner.getBoundingClientRect();
     const x = e.clientX - rect.left;   // tap X inside element

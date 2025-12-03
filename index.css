@@ -182,7 +182,7 @@
         }
 
         .mobile-glass-container .magnifying-glass {
-            transform: rotate(-12deg) translateY(28px) translateX(-15px);
+            transform: rotate(-12deg) translateY(5px) translateX(-90px);
         }
     }
 

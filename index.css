@@ -180,6 +180,10 @@
             display: flex;
             justify-content: center;
         }
+
+        .mobile-glass-container .magnifying-glass {
+            transform: rotate(-12deg) translateY(28px) translateX(-15px);
+        }
     }
 
     .book {

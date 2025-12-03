@@ -134,6 +134,29 @@
         pointer-events: none;
     }
 
+    /* Magnifying Glass Styles */
+    .magnifying-glass {
+        width: 100px;
+        /* Adjust size as needed */
+        height: auto;
+        transform: rotate(-12deg) translateY(38px);
+        transform-origin: center;
+        pointer-events: auto;
+        /* Allow interaction if needed, though not specified */
+    }
+
+    /* Mobile Glass Container (Shelf 3) */
+    .mobile-glass-container {
+        position: absolute;
+        left: 50%;
+        top: -80px;
+        /* Adjust vertical position on shelf 3 */
+        transform: translateX(-50%);
+        display: none;
+        /* Hidden by default (Desktop) */
+        z-index: 5;
+    }
+
     @media (max-width: 768px) {
         :root {
             --shelf-width: 95%;
@@ -145,6 +168,17 @@
             transform: translateX(-50%);
             justify-content: center;
             width: 100%;
+        }
+
+        /* Hide desktop glass on mobile */
+        .desktop-glass {
+            display: none;
+        }
+
+        /* Show mobile glass on mobile */
+        .mobile-glass-container {
+            display: flex;
+            justify-content: center;
         }
     }
 

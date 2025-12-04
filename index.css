@@ -1,0 +1,34 @@
+* {
+    margin: 50px;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    /* Light background for contrast */
+}
+
+.shelf-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    /* Space between shelves */
+}
+
+.shelf {
+    width: 80%;
+    height: 20px;
+    /* Thickness of the shelf */
+    background-color: #8b4513;
+    /* SaddleBrown color for wood effect */
+    border-radius: 2px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    /* Shadow for depth */
+}

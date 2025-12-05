@@ -1,12 +1,22 @@
-{
-  "profile": "https://github.com/DhyeyLukhi",
-  "repos": [
-    "https://github.com/DhyeyLukhi/Python, Python codes",
-    "https://github.com/DhyeyLukhi/Web-Development, Web-Dev Training",
-    "https://github.com/DhyeyLukhi/DSA-with-Python, DSA with Python",
-    "https://github.com/DhyeyLukhi/Experiments, My Experiments with everything",
-    "https://github.com/DhyeyLukhi/Steganography-tool, Steganography in GUI",
-    "https://github.com/DhyeyLukhi/Key-Logger, Key logger in Python",
-    "https://github.com/DhyeyLukhi/Cpp, C++ codes"
-  ]
-}
+[
+    {
+        "url": "https://github.com/dhyey/bio-page",
+        "title": "Bio Page",
+        "desc": "A personal bio page with interactive shelf elements."
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Python",
+        "title": "Python Codes",
+        "desc": "Python codes for various kind of things, even if it's just for testing, just for fun, or any serious coding project"
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/DSA-with-Python",
+        "title": "DSA with Python",
+        "desc": "My all the DSA files and codes which i does, not just that, it even contains my practice codes which i do when i solve any problem from any website like leetcode"
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Web-Development",
+        "title": "Web Development",
+        "desc": "My codes, from those days when i was learning the web development, just to learn the reactjs"
+    }
+]

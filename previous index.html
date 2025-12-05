@@ -5,37 +5,44 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dhyey Lukhi — Shelf & Detective Books</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
   <div class="top-layer">
     <div class="photo-frame"></div>
-    <img class="magnifying-glass" src="magnyfying glass.png" alt="Magnifying Glass" />
   </div>
 
   <div class="shelf-wrapper">
     <div class="shelf" id="shelf1"></div>
+
     <div class="shelf" id="shelf2">
-      <div class="books-row">
-        <div class="book linkedin" id="linkedinBook" data-file="linkedin.json">
+      <div class="books-row" id="booksRow">
+        <div class="book linkedin" data-type="linkedin" id="linkedinBook" title="Open LinkedIn Book">
           <div class="cover">
             <div class="logo"><img src="linkedin.png" alt="LinkedIn" style="width:28px;height:28px;"></div>
             <div class="label">LinkedIn</div>
           </div>
         </div>
-        <div class="book github" id="githubBook" data-file="github.json">
+
+        <div class="book github" data-type="github" id="githubBook" title="Open GitHub Book">
           <div class="cover">
             <div class="logo"><img src="github.png" alt="GitHub" style="width:28px;height:28px;"></div>
             <div class="label">GitHub</div>
           </div>
         </div>
+
+        <!-- Desktop Magnifying Glass -->
+        <img src="magnyfying glass.png" alt="Magnifying Glass" class="magnifying-glass desktop-glass">
       </div>
     </div>
-    <div class="shelf" id="shelf3"></div>
+
+    <div class="shelf" id="shelf3">
+      <!-- Mobile Magnifying Glass -->
+      <div class="mobile-glass-container">
+        <img src="magnyfying glass.png" alt="Magnifying Glass" class="magnifying-glass">
+      </div>
+    </div>
     <div class="shelf" id="shelf4"></div>
     <div class="shelf" id="shelf5"></div>
     <div class="shelf" id="shelf6"></div>
@@ -43,23 +50,24 @@
     <div class="shelf" id="shelf8"></div>
   </div>
 
-  <!-- Photo Modal -->
-  <div class="photo-modal" id="photoModal">
-    <div class="photo-modal-content">
-      <img src="photo.jpg" alt="Profile Photo Large">
-    </div>
-  </div>
-
-  <div class="book-modal" id="bookModal">
-    <div class="book-scene">
+  <div class="book-modal" id="bookModal" aria-hidden="true">
+    <div class="book-scene" role="dialog" aria-modal="true" aria-label="Book viewer">
       <div class="book-inner" id="bookInner">
-        <!-- Pages will be injected here -->
         <div class="close-btn" id="closeBook" title="Close">✕</div>
       </div>
     </div>
   </div>
 
+  <!-- Photo Modal -->
+  <div class="photo-modal" id="photoModal">
+    <div class="photo-modal-content">
+      <div class="photo-modal-close" id="closePhotoModal">✕</div>
+      <img src="photo.jpg" alt="Profile Photo Large">
+    </div>
+  </div>
+
   <script src="index.js"></script>
+</body>
 </body>
 
 </html>

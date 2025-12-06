@@ -1,8 +1,8 @@
 [
     {
-        "url": "https://github.com/dhyey/bio-page",
-        "title": "Bio Page",
-        "desc": "A personal bio page with interactive shelf elements."
+        "url": "https://github.com/DhyeyLukhi",
+        "title": "Profile",
+        "desc": "My GitHub profile"
     },
     {
         "url": "https://github.com/DhyeyLukhi/Python",
@@ -18,5 +18,30 @@
         "url": "https://github.com/DhyeyLukhi/Web-Development",
         "title": "Web Development",
         "desc": "My codes, from those days when i was learning the web development, just to learn the reactjs"
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Experiments",
+        "title": "Experiments",
+        "desc": "I love to do experiments with my code. My all the experiments are present here, whether it is in C, in C++ or in Python."
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Cisco-Packets",
+        "title": "Cisco Packets",
+        "desc": "Well, I someitmes make and solve different kind of Networking questions in Cisco Packet Tracer, and the best way to save it is to save it on GitHub, so others can also see my Answers and can also improve their skills, as well as grow together"
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Steganography-tool",
+        "title": "Steganography Tool",
+        "desc": "This is the tool I build with the Python, and now it's available in GUI too. Research yourself, about the Steganography and you will find that how powerful this technique is for secure communication."
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Key-Logger",
+        "title": "Key Logger",
+        "desc": "This is also a tool which i build in Python. Just install it in the target's computer, and later on, you will get all the data about when the target computer clicked, where he moved the mouse and even what is target computer typing with the precise time and positioning"
+    },
+    {
+        "url": "https://github.com/DhyeyLukhi/Cpp",
+        "title": "C++",
+        "desc": "My all the C++ codes are present here."
     }
 ]

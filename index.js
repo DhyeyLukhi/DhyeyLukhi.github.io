@@ -54,6 +54,7 @@ const books = document.querySelectorAll('.book');
 
 let currentPages = [];    // array of {title, url, desc}
 let currentIndex = 0;     // page number visible (0 means first page showing)
+let activeBook = null;    // reference to the currently hidden book element
 
 /* Helper: Escape HTML */
 function escapeHtml(s) { if (!s) return ''; return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;'); }
@@ -78,7 +79,7 @@ function buildPagesDom(pages) {
         el.innerHTML = `
       <div class="page-content">
         <h1>${escapeHtml(pg.title)}</h1>
-        ${pg.url ? `<a href="${escapeAttr(pg.url)}" target="_blank" rel="noopener noreferrer">Open Link</a>` : ''}
+        ${pg.url ? `<a href="${escapeAttr(pg.url)}" target="_blank" rel="noopener noreferrer">Here is the Link</a>` : ''}
         <p>${escapeHtml(pg.desc)}</p>
         <div class="page-number">${i + 1}</div>
       </div>
@@ -119,7 +120,14 @@ function prevPage() {
     }
 }
 
-async function openBook(file) {
+async function openBook(file, bookEl) {
+    // Immediate Feedback: Hide the book on shelf
+    activeBook = bookEl;
+    if (activeBook) {
+        activeBook.style.opacity = '0';
+        activeBook.style.pointerEvents = 'none'; // Prevent clicking again
+    }
+
     try {
         const response = await fetch(file);
         const pages = await response.json();
@@ -135,6 +143,7 @@ async function openBook(file) {
             bookModal.offsetHeight;
             bookModal.classList.add('active'); // CSS opacity transition if any
 
+
             // tiny entrance animation
             bookInner.style.transform = 'translateY(6px) scale(.98)';
             setTimeout(() => bookInner.style.transform = 'translateY(0) scale(1)', 10);
@@ -142,19 +151,39 @@ async function openBook(file) {
             document.body.style.overflow = 'hidden';
         } else {
             console.error('No valid pages found');
+            // Revert transparency if failed
+            if (activeBook) {
+                activeBook.style.opacity = '';
+                activeBook.style.pointerEvents = '';
+                activeBook = null;
+            }
         }
     } catch (err) {
         console.error('Failed to load book data:', err);
+        // Revert transparency if failed
+        if (activeBook) {
+            activeBook.style.opacity = '';
+            activeBook.style.pointerEvents = '';
+            activeBook = null;
+        }
     }
 }
 
 function closeViewer() {
     bookModal.classList.remove('active');
+
     setTimeout(() => {
         bookModal.style.display = 'none';
         document.body.style.overflow = '';
         bookInner.innerHTML = ''; // Request to clear content
-    }, 300);
+
+        // Show the book on shelf again AFTER close animation finishes
+        if (activeBook) {
+            activeBook.style.opacity = '';
+            activeBook.style.pointerEvents = '';
+            activeBook = null;
+        }
+    }, 600);
 }
 
 /* Event Wiring */
@@ -162,7 +191,7 @@ books.forEach(book => {
     book.addEventListener('click', (e) => {
         e.stopPropagation();
         const file = book.dataset.file;
-        if (file) openBook(file);
+        if (file) openBook(file, book);
     });
 });
 

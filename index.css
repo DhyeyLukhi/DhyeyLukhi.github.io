@@ -62,6 +62,9 @@ body {
     z-index: 4;
     align-self: flex-end;
     /* Align to bottom of container if needed, or just flow naturally */
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
 }
 
 

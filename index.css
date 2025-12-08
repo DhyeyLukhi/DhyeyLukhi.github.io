@@ -5,6 +5,15 @@
     --book-h: 110px;
     --book-gap: 100px;
     --leather: linear-gradient(180deg, #5a3f2b, #4b2f1e);
+
+    /* Light bulb variables */
+    --on: 0;
+    --bulb-bg: hsl(calc(200 - (var(--on) * 160)), calc((20 + (var(--on) * 50)) * 1%), calc((20 + (var(--on) * 60)) * 1%));
+    --cord: hsl(0, 0%, calc((60 - (var(--on) * 50)) * 1%));
+    --stroke: hsl(0, 0%, calc((60 - (var(--on) * 50)) * 1%));
+    --shine: hsla(0, 0%, 100%, calc(0.75 - (var(--on) * 0.5)));
+    --cap: hsl(0, 0%, calc((40 + (var(--on) * 30)) * 1%));
+    --filament: hsl(45, calc(var(--on) * 80%), calc((25 + (var(--on) * 75)) * 1%));
 }
 
 body {
@@ -12,12 +21,13 @@ body {
     padding: 40px;
     min-height: 100vh;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    background: #f0f0f0;
+    background: var(--bulb-bg);
     color: #222;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow-x: hidden;
+    transition: background 0.5s ease;
 }
 
 /* top photo frame kept */
@@ -478,5 +488,83 @@ body {
     .book-modal {
         padding: 0;
         align-items: center;
+    }
+}
+
+/* Light Bulb Toggle Styles */
+.toggle-scene {
+    overflow: visible !important;
+    height: 18vmin;
+    max-height: 140px;
+    position: fixed;
+    top: 20px;
+    right: 80px;
+    z-index: 100;
+}
+
+.toggle-scene__cord {
+    stroke: var(--cord);
+    cursor: move;
+}
+
+.toggle-scene__cord:nth-of-type(1) {
+    display: none;
+}
+
+.toggle-scene__cord:nth-of-type(2),
+.toggle-scene__cord:nth-of-type(3),
+.toggle-scene__cord:nth-of-type(4),
+.toggle-scene__cord:nth-of-type(5) {
+    display: none;
+}
+
+.toggle-scene__cord-end {
+    stroke: var(--cord);
+    fill: var(--cord);
+}
+
+.toggle-scene__dummy-cord {
+    stroke-width: 6;
+    stroke: var(--cord);
+}
+
+.bulb__filament {
+    stroke: var(--filament);
+    transition: stroke 0.3s ease;
+}
+
+.bulb__shine {
+    stroke: var(--shine);
+}
+
+.bulb__flash {
+    stroke: hsl(45, 80%, 80%);
+    display: none;
+}
+
+.bulb__bulb {
+    stroke: var(--stroke);
+    fill: hsla(calc(180 - (95 * var(--on))), 80%, 80%, calc(0.1 + (0.4 * var(--on))));
+    transition: fill 0.3s ease;
+}
+
+.bulb__cap {
+    fill: var(--cap);
+}
+
+.bulb__cap-shine {
+    fill: var(--shine);
+}
+
+.bulb__cap-outline {
+    stroke: var(--stroke);
+}
+
+@media (max-width: 768px) {
+    .toggle-scene {
+        height: 15vmin;
+        max-height: 100px;
+        right: 20px;
+        top: 10px;
     }
 }

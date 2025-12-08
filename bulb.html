@@ -1,18 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dhyey Lukhi</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Light Bulb Toggle</title>
+  <link rel="stylesheet" href="bulb.css">
 </head>
-
 <body>
-  <!-- Light Bulb Toggle -->
   <svg class="toggle-scene" xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMinYMin' viewBox='0 0 197.451 481.081'>
     <defs>
       <marker id='e' orient='auto' overflow='visible' refX='0' refY='0'>
@@ -62,59 +56,9 @@
       <path class='bulb__shine' fill='none' stroke-linecap='round' stroke-linejoin='round' stroke-width='12' d='M-789.19 757.501a45.897 45.897 0 013.915-36.189 45.897 45.897 0 0129.031-21.957'/>
     </g>
   </svg>
-
-  <div class="top-layer">
-    <div class="photo-frame"></div>
-    <img class="magnifying-glass" src="magnyfying glass.png" alt="Magnifying Glass" />
-  </div>
-
-  <div class="shelf-wrapper">
-    <div class="shelf" id="shelf1"></div>
-    <div class="shelf" id="shelf2">
-      <div class="books-row">
-        <div class="book linkedin" id="linkedinBook" data-file="linkedin.json">
-          <div class="cover">
-            <div class="logo"><img src="linkedin.png" alt="LinkedIn" style="width:28px;height:28px;"></div>
-            <div class="label">LinkedIn</div>
-          </div>
-        </div>
-        <div class="book github" id="githubBook" data-file="github.json">
-          <div class="cover">
-            <div class="logo"><img src="github.png" alt="GitHub" style="width:28px;height:28px;"></div>
-            <div class="label">GitHub</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="shelf" id="shelf3"></div>
-    <div class="shelf" id="shelf4"></div>
-    <div class="shelf" id="shelf5"></div>
-    <div class="shelf" id="shelf6"></div>
-    <div class="shelf" id="shelf7"></div>
-    <div class="shelf" id="shelf8"></div>
-  </div>
-
-  <!-- Photo Modal -->
-  <div class="photo-modal" id="photoModal">
-    <div class="photo-modal-content">
-      <img src="photo.jpg" alt="Profile Photo Large">
-    </div>
-  </div>
-
-  <div class="book-modal" id="bookModal">
-    <div class="book-scene">
-      <div class="book-inner" id="bookInner">
-        <!-- Pages will be injected here -->
-        <div class="close-btn" id="closeBook" title="Close">✕</div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
   <script src="https://assets.codepen.io/16327/MorphSVGPlugin3.min.js"></script>
   <script src="https://unpkg.com/gsap@3/dist/Draggable.min.js"></script>
   <script src="bulb.js"></script>
-  <script src="index.js"></script>
 </body>
-
 </html>

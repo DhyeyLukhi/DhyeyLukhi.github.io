@@ -7,10 +7,12 @@
     --leather: linear-gradient(180deg, #5a3f2b, #4b2f1e);
 
     /* Light bulb variables */
+    /* --on: 0 = light mode (bulb off), --on: 1 = dark mode (bulb on) */
     --on: 0;
-    --bulb-bg: hsl(calc(200 - (var(--on) * 160)), calc((20 + (var(--on) * 50)) * 1%), calc((20 + (var(--on) * 60)) * 1%));
-    --cord: hsl(0, 0%, calc((60 - (var(--on) * 50)) * 1%));
-    --stroke: hsl(0, 0%, calc((60 - (var(--on) * 50)) * 1%));
+    /* Dark background when on (gray), light when off */
+    --bulb-bg: hsl(0, calc(0% * (1 - var(--on))), calc((88 - (var(--on) * 68)) * 1%));
+    --cord: hsl(0, 0%, calc((60 + (var(--on) * 30)) * 1%));
+    --stroke: hsl(0, 0%, calc((60 + (var(--on) * 30)) * 1%));
     --shine: hsla(0, 0%, 100%, calc(0.75 - (var(--on) * 0.5)));
     --cap: hsl(0, 0%, calc((40 + (var(--on) * 30)) * 1%));
     --filament: hsl(45, calc(var(--on) * 80%), calc((25 + (var(--on) * 75)) * 1%));

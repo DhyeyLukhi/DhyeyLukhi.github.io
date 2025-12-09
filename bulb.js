@@ -14,8 +14,24 @@ const AUDIO = {
     CLICK: new Audio('https://assets.codepen.io/605876/click.mp3'),
 };
 
+// Initialize theme based on current time
+function getInitialThemeState() {
+    const now = new Date();
+    const hours = now.getHours();
+
+    // Between 7 AM (7) and 7 PM (19): Light mode (bulb OFF)
+    // Between 7 PM (19) and 7 AM (7): Dark mode (bulb ON)
+    if (hours >= 7 && hours < 19) {
+        // Daytime: Light mode, bulb should be OFF
+        return false;
+    } else {
+        // Nighttime: Dark mode, bulb should be ON
+        return true;
+    }
+}
+
 const STATE = {
-    ON: false,
+    ON: getInitialThemeState(),
 };
 
 const CORD_DURATION = 0.1;
@@ -39,11 +55,22 @@ const RESET = () => {
 
 RESET();
 
+// Helper: Map STATE.ON to CSS --on value
+// If STATE.ON is true (bulb is on), CSS --on = 1 for dark mode
+// If STATE.ON is false (bulb is off), CSS --on = 0 for light mode
+function getCssOnValue() {
+    return STATE.ON ? 1 : 0;
+}
+
+// Set initial theme based on time
+set(document.documentElement, { '--on': getCssOnValue() });
+
+
 const CORD_TL = timeline({
     paused: true,
     onStart: () => {
         STATE.ON = !STATE.ON;
-        set(document.documentElement, { '--on': STATE.ON ? 1 : 0 });
+        set(document.documentElement, { '--on': getCssOnValue() });
         set([DUMMY, HIT], { display: 'none' });
         set(CORDS[0], { display: 'block' });
         AUDIO.CLICK.play();

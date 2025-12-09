@@ -4,9 +4,10 @@
 
 :root {
     --on: 0;
-    --bg: hsl(calc(200 - (var(--on) * 160)), calc((20 + (var(--on) * 50)) * 1%), calc((20 + (var(--on) * 60)) * 1%));
-    --cord: hsl(0, 0%, calc((60 - (var(--on) * 50)) * 1%));
-    --stroke: hsl(0, 0%, calc((60 - (var(--on) * 50)) * 1%));
+    /* Dark background when on (gray), light when off */
+    --bg: hsl(0, calc(0% * (1 - var(--on))), calc((88 - (var(--on) * 68)) * 1%));
+    --cord: hsl(0, 0%, calc((60 + (var(--on) * 30)) * 1%));
+    --stroke: hsl(0, 0%, calc((60 + (var(--on) * 30)) * 1%));
     --shine: hsla(0, 0%, 100%, calc(0.75 - (var(--on) * 0.5)));
     --cap: hsl(0, 0%, calc((40 + (var(--on) * 30)) * 1%));
     --filament: hsl(45, calc(var(--on) * 80%), calc((25 + (var(--on) * 75)) * 1%));
@@ -28,6 +29,12 @@ body {
     position: fixed;
     top: 20px;
     right: 120px;
+}
+
+@media (max-width: 768px) {
+    .toggle-scene {
+        display: none;
+    }
 }
 
 .toggle-scene__cord {
@@ -67,11 +74,19 @@ body {
 .bulb__flash {
     stroke: hsl(45, 80%, 80%);
     display: none;
+    opacity: calc(var(--on) * 0.8);
+    animation: pulse calc(0.6s / var(--on, 1)) infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0%, 100% { r: 70px; }
+    50% { r: 95px; }
 }
 
 .bulb__bulb {
     stroke: var(--stroke);
-    fill: hsla(calc(180 - (95 * var(--on))), 80%, 80%, calc(0.1 + (0.4 * var(--on))));
+    fill: hsla(calc(180 - (95 * var(--on))), 80%, calc(50% + (var(--on) * 30%)), calc(0.15 + (0.5 * var(--on))));
+    filter: drop-shadow(0 0 calc(20px * var(--on)) hsla(45, 100%, 70%, calc(0.6 * var(--on))));
 }
 
 .bulb__cap {

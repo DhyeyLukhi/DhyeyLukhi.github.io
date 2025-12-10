@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odometer Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="odometer.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 40px;
+            min-height: 100vh;
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .demo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-icon {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .demo-label {
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .info {
+            color: white;
+            text-align: center;
+            max-width: 600px;
+            line-height: 1.6;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎰 Odometer Animation Demo</h1>
+    
+    <div class="demo-container">
+        <div class="demo-item">
+            <div class="demo-icon">⚡</div>
+            <div class="odometer-container" id="demo1"></div>
+            <div class="demo-label">Bullet</div>
+        </div>
+
+        <div class="demo-item">
+            <div class="demo-icon">🔥</div>
+            <div class="odometer-container" id="demo2"></div>
+            <div class="demo-label">Blitz</div>
+        </div>
+
+        <div class="demo-item">
+            <div class="demo-icon">⚔️</div>
+            <div class="odometer-container" id="demo3"></div>
+            <div class="demo-label">Rapid</div>
+        </div>
+
+        <div class="demo-item">
+            <div class="demo-icon">📅</div>
+            <div class="odometer-container" id="demo4"></div>
+            <div class="demo-label">Daily</div>
+        </div>
+
+        <div class="demo-item">
+            <div class="demo-icon">🎯</div>
+            <div class="odometer-container" id="demo5"></div>
+            <div class="demo-label">Live 960</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="animateAll()">🎬 Animate All</button>
+        <button onclick="randomizeAll()">🎲 Randomize</button>
+        <button onclick="resetAll()">🔄 Reset</button>
+    </div>
+
+    <div class="info">
+        <strong>Features:</strong><br>
+        • Smooth rolling animation from 0 to target value<br>
+        • Staggered timing for each digit (cascading effect)<br>
+        • 4-digit display with leading zeros<br>
+        • Responsive design with mobile support<br>
+        • Easy to update values dynamically
+    </div>
+
+    <script src="odometer.js"></script>
+    <script>
+        // Initialize odometers with different values
+        const odometers = [
+            new Odometer(document.getElementById('demo1'), 1234),
+            new Odometer(document.getElementById('demo2'), 5678),
+            new Odometer(document.getElementById('demo3'), 2468),
+            new Odometer(document.getElementById('demo4'), 1357),
+            new Odometer(document.getElementById('demo5'), 9876)
+        ];
+
+        // Animate on load
+        window.addEventListener('load', () => {
+            odometers.forEach(od => od.animate());
+        });
+
+        function animateAll() {
+            odometers.forEach(od => od.animate());
+        }
+
+        function randomizeAll() {
+            odometers.forEach(od => {
+                const randomValue = Math.floor(Math.random() * 10000);
+                od.setValue(randomValue);
+            });
+        }
+
+        function resetAll() {
+            odometers.forEach((od, i) => {
+                const values = [1234, 5678, 2468, 1357, 9876];
+                od.setValue(values[i]);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -227,6 +227,41 @@ body {
     pointer-events: none;
 }
 
+/* Time icons (desktop and mobile groups) */
+.time-row {
+    position: absolute;
+    display: flex;
+    align-items: flex-end;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.time-row .time-icon {
+    width: 64px;
+    height: auto;
+    display: block;
+    pointer-events: auto;
+    flex-shrink: 0;
+}
+
+.time-row.desktop {
+    /* Span entire shelf width with equal spacing */
+    left: 0;
+    top: -104px;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.time-row.mobile {
+    display: none; /* shown only on portrait/mobile via media query */
+    position: absolute;
+    left: 36px;
+    top: 12px;
+    gap: 18px;
+}
+
 .book {
     width: var(--book-w);
     height: var(--book-h);
@@ -553,4 +588,27 @@ body {
         right: 20px;
         top: 10px;
     }
+}
+
+/* Responsive: switch time icons layout for mobile/portrait */
+@media (max-width: 768px),
+(orientation: portrait) {
+    .time-row.desktop {
+        display: none;
+    }
+    .time-row.mobile {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        /* position images near the shelf surface, shifted upwards */
+        top: -54px;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+    /* ensure each shelf's mobile row aligns nicely */
+    #shelf6 .time-row.mobile { top: -100px; }
+    #shelf7 .time-row.mobile { top: -100px; }
+    #shelf8 .time-row.mobile { top: -120px; align-items: flex-start; }
 }

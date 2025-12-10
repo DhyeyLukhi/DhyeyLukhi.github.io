@@ -610,5 +610,5 @@ body {
     /* ensure each shelf's mobile row aligns nicely */
     #shelf6 .time-row.mobile { top: -100px; }
     #shelf7 .time-row.mobile { top: -100px; }
-    #shelf8 .time-row.mobile { top: -120px; align-items: flex-start; }
+    #shelf8 .time-row.mobile { top: -100px; align-items: flex-start; }
 }

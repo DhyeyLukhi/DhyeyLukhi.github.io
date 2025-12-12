@@ -73,7 +73,11 @@ async function fetchChessRatings(username) {
             'rapid': data.chess_rapid?.last?.rating || 0,
             'daily': data.chess_daily?.last?.rating || 0,
             // Chess960 - only rapid time format
+<<<<<<< HEAD
             'live960': data.chess960_rapid?.last?.rating || 724
+=======
+            'live960': data.chess960_rapid?.last?.rating || 697
+>>>>>>> 31974b7 (Minor updates)
         };
 
         return ratings;

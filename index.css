@@ -255,7 +255,8 @@ body {
 }
 
 .time-row.mobile {
-    display: none; /* shown only on portrait/mobile via media query */
+    display: none;
+    /* shown only on portrait/mobile via media query */
     position: absolute;
     left: 36px;
     top: 12px;
@@ -596,6 +597,7 @@ body {
     .time-row.desktop {
         display: none;
     }
+
     .time-row.mobile {
         display: flex;
         align-items: flex-end;
@@ -607,8 +609,18 @@ body {
         padding: 0 20px;
         box-sizing: border-box;
     }
+
     /* ensure each shelf's mobile row aligns nicely */
-    #shelf6 .time-row.mobile { top: -100px; }
-    #shelf7 .time-row.mobile { top: -100px; }
-    #shelf8 .time-row.mobile { top: -100px; align-items: flex-start; }
+    #shelf6 .time-row.mobile {
+        top: -100px;
+    }
+
+    #shelf7 .time-row.mobile {
+        top: -100px;
+    }
+
+    #shelf8 .time-row.mobile {
+        top: -100px;
+        align-items: flex-start;
+    }
 }

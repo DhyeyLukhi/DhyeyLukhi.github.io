@@ -100,6 +100,17 @@ Draggable.create(PROXY, {
         startX = e.x;
         startY = e.y;
     },
+    onClick: function () {
+        to(DUMMY_CORD, {
+            attr: { x2: ENDX, y2: parseFloat(ENDY) + 60 },
+            duration: CORD_DURATION,
+            repeat: 1,
+            yoyo: true,
+            onComplete: () => {
+                CORD_TL.restart();
+            },
+        });
+    },
     onDrag: function () {
         set(DUMMY_CORD, {
             attr: {

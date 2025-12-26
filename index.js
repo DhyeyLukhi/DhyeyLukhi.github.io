@@ -39,10 +39,12 @@ if (photoModal) {
 }
 
 // Close on Escape key
+// Close on Escape key
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-        if (photoModal.classList.contains('active')) closePhotoModal();
-        if (bookModal.classList.contains('active')) closeViewer();
+        if (photoModal && photoModal.classList.contains('active')) closePhotoModal();
+        if (bookModal && bookModal.classList.contains('active')) closeViewer();
+        if (contactModal && contactModal.classList.contains('active')) closeContactModal();
     }
 });
 
@@ -230,3 +232,38 @@ document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeViewer();
     }
 });
+
+/* Contact Modal Logic */
+const contactModal = document.getElementById('contactModal');
+const mailBook = document.getElementById('mailBook');
+
+function openContactModal() {
+    if (!contactModal) return;
+    contactModal.style.display = 'flex';
+    // Force reflow
+    contactModal.offsetHeight;
+    contactModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeContactModal() {
+    if (!contactModal) return;
+    contactModal.classList.remove('active');
+    setTimeout(() => {
+        contactModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+if (mailBook) {
+    mailBook.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openContactModal();
+    });
+}
+
+if (contactModal) {
+    contactModal.addEventListener('click', (e) => {
+        if (e.target === contactModal) closeContactModal();
+    });
+}

@@ -5,6 +5,11 @@
         "desc": "My GitHub profile"
     },
     {
+    	"url": "https://github.com/DhyeyLukhi/Text-Replacement",
+    	"title": "Text-Replacement",
+    	"desc": "I build this code, to give the similar experience as the iOS's text-replacement gives, i wanted this kind of something for linux, but find out that i should make my own, which can make my grip, more stronger on Python, and can also help me to learn few more things"
+    },
+    {
         "url": "https://github.com/DhyeyLukhi/Python",
         "title": "Python Codes",
         "desc": "Python codes for various kind of things, even if it's just for testing, just for fun, or any serious coding project"

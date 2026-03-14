@@ -5,6 +5,11 @@
         "desc": "My GitHub profile"
     },
     {
+    	"url": "https://github.com/DhyeyLukhi/Audio-Steganography",
+        "title": "Audio Steganography",
+        "desc": "The Steganography with Audio, previously it was made with image. This is with audio, same logic of LSB, but new method, new library and new format. With new knowledge and better understanding"
+    },
+    {
     	"url": "https://github.com/DhyeyLukhi/Text-Replacement",
     	"title": "Text-Replacement",
     	"desc": "I build this code, to give the similar experience as the iOS's text-replacement gives, i wanted this kind of something for linux, but find out that i should make my own, which can make my grip, more stronger on Python, and can also help me to learn few more things"

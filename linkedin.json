@@ -5,6 +5,11 @@
         "desc": "My LinkedIn profile is here"
     },
     {
+    	"url": "https://www.linkedin.com/feed/update/urn:li:activity:7438476453530415104/",
+        "title": "Steganography with Audio",
+        "desc": "Previously I had made the Steganography with Image, and this is the new one, now you can do this with the audio too. It's actually interesting when you hear that things like this are possible with audio"
+    },
+    {
     	"url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7414685232165085184/",
     	"title": "Text-Replacement",
     	"desc": "I build a small, not the project, but the code, for my own, which copies the similarity of iOS's Text-Replacement feature. I want that same experience on my Linux, so I build this with Python."

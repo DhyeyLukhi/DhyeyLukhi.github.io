@@ -72,7 +72,7 @@ async function fetchChessRatings(username) {
             'blitz': data.chess_blitz?.last?.rating || 0,
             'rapid': data.chess_rapid?.last?.rating || 0,
             'daily': data.chess_daily?.last?.rating || 0,
-            'live960': data.chess960_rapid?.last?.rating || 731
+            'live960': data.chess960_rapid?.last?.rating || 732
 
         };
 

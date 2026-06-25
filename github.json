@@ -5,6 +5,11 @@
         "desc": "My GitHub profile"
     },
     {
+    	"url": "https://github.com/DhyeyLukhi/QR-Generator",
+        "title": "QR Generator ",
+        "desc": "A Python script, which let you create a QR code of any string. You can even use URLs of websites Just enter the String you want to make QR for, and then in just a split second, the QR will be generated. No need to open the browser or search for 'QR Generator'."
+    },
+    {
     	"url": "https://github.com/DhyeyLukhi/Online-Incognito",
         "title": "Online Incognito",
         "desc": "A Python tool, which gives a complete incognito profile for your online sign up. This tools not just gives you a fake email, but also a fake name, address, license plate and much more."

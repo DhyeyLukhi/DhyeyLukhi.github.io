@@ -5,6 +5,11 @@
         "desc": "My GitHub profile"
     },
     {
+    	"url": "https://github.com/DhyeyLukhi/stockfish-localSystem",
+        "title": "StockFish on your Computer ",
+        "desc": "Stockfish is a open source chess engine. Used in chess to calculate the position and finding the best moves. chess.com usually gives 1 game review per day for free users. With this code, if you have stockfish downloaded on your computer, then it will use it and you will be able to get a very good idea about your game with the stockfish from your computer"
+    },
+    {
     	"url": "https://github.com/DhyeyLukhi/QR-Generator",
         "title": "QR Generator ",
         "desc": "A Python script, which let you create a QR code of any string. You can even use URLs of websites Just enter the String you want to make QR for, and then in just a split second, the QR will be generated. No need to open the browser or search for 'QR Generator'."

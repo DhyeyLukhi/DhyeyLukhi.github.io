@@ -5,6 +5,11 @@
         "desc": "My LinkedIn profile is here"
     },
     {
+    	"url": "https://www.linkedin.com/feed/update/urn:li:activity:7490403402879864832/",
+        "title": "Local Stockfish",
+        "desc": "Stockfish is a open source chess engine. Used in chess to calculate the position and finding the best moves. chess.com usually gives 1 game review per day for free users. With this code, if you have stockfish downloaded on your computer, then it will use it and you will be able to get a very good idea about your game with the stockfish from your computer"
+    },
+    {
     	"url": "https://www.linkedin.com/feed/update/urn:li:ugcPost:7472297023040512000/",
         "title": "Online Incognito",
         "desc": "A Python Based temporary email script. It's not just for emails, it gives you a lot more fake user information which can you can use to get into website."

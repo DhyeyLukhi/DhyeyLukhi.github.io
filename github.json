@@ -40,6 +40,11 @@
         "title": "DSA with Python",
         "desc": "My all the DSA files and codes which i does, not just that, it even contains my practice codes which i do when i solve any problem from any website like leetcode"
     },
+    {
+        "url": "https://github.com/DhyeyLukhi/LeetSolutions",
+        "title": "LeetCode Solutions",
+        "desc": "This is repository where my all the leetcode solutions are there. mostly those all are done using Python3. You can view my solutions, you can even fork them to improve and you can even send me any suggestions in my code."
+    },
 
     {
         "url": "https://github.com/DhyeyLukhi/Experiments",
